@@ -1,0 +1,17 @@
+/build/
+/target/
+/.classpath
+/.project
+/bin/
+/.settings/
+*.iml
+.idea
+target
+.DS_Store
+.project
+*.prefs
+*.pmd
+*.pmd*.xml
+.classpath
+generated/
+*.*~

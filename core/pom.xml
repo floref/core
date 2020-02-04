@@ -1,0 +1,137 @@
+<?xml version="1.0" ?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.floref</groupId>
+        <artifactId>parent</artifactId>
+        <version>1.0.0.0</version>
+    </parent>
+
+    <artifactId>floref-core</artifactId>
+    <name>floref-core</name>
+    <packaging>jar</packaging>
+
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    <organization>
+        <name>Flowref</name>
+        <url>https://github.com/floref</url>
+    </organization>
+    <developers>
+        <developer>
+            <id>cristiandonoiu</id>
+            <name>Cristian Donoiu</name>
+            <email></email>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>
+            scm:git:git://github.com/floref/core
+        </connection>
+        <developerConnection>
+            scm:git:git://github.com/floref/core
+        </developerConnection>
+        <url>
+            https://github.com/floref/core
+        </url>
+    </scm>
+    <issueManagement>
+        <system>GitHub</system>
+        <url>
+            https://github.com/floref/core/issues
+        </url>
+    </issueManagement>
+
+    <dependencies>
+        <!-- Detects the presence of Log4j 2.x / SLF4J, falling back to {@code java.util.logging}.
+        Does not imports other Spring eco-system libraries.
+        https://www.youtube.com/watch?v=fBHVYWxCnmA&feature=youtu.be&t=3099
+        https://spring.io/blog/2009/12/04/logging-dependencies-in-spring/
+        https://github.com/spring-projects/spring-framework/issues/19081
+        -->
+        <!--<dependency> &lt;!&ndash; Bundled/repackaged this in the code in order to not create conflicts. &ndash;&gt;-->
+            <!--<groupId>org.springframework</groupId>-->
+            <!--<artifactId>spring-jcl</artifactId>-->
+        <!--</dependency>-->
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Test. -->
+        <dependency>
+            <groupId>org.powermock</groupId>
+            <artifactId>powermock-module-junit4</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j-impl</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>  <!-- Needs to be after the test deps -->
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+
+    </dependencies>
+
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>${maven-jar-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>test-jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <threadCount>4</threadCount>
+                    <parallel>classes</parallel>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+
+</project>
