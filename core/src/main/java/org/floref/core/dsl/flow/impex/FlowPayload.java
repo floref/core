@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.floref.core.dsl.flow.runtime;
+package org.floref.core.dsl.flow.impex;
 
 import org.floref.core.exception.FlowDefinitionException;
 

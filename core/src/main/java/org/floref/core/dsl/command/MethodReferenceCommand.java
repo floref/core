@@ -16,6 +16,25 @@
 
 package org.floref.core.dsl.command;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.floref.core.config.FlowConfiguration;
+import org.floref.core.config.consumer.MethodRefMetrics;
+import org.floref.core.config.consumer.MetricsHelper;
+import org.floref.core.config.injector.BeanInjector;
+import org.floref.core.dsl.flow.Flows;
+import org.floref.core.dsl.flow.impex.Aliases;
+import org.floref.core.dsl.flow.impex.FlowStep;
+import org.floref.core.exception.FlowCancelledException;
+import org.floref.core.exception.FlowDefinitionException;
+import org.floref.core.exception.MissingBeanFlowException;
+import org.floref.core.flow.annotation.FlowVar;
+import org.floref.core.flow.reference.*;
+import org.floref.core.flow.reference.LambdaMeta.MethodParameter;
+import org.floref.core.flow.run.CommandContext;
+import org.floref.core.flow.run.FlowSession;
+import org.floref.core.flow.run.FlowUtil;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -23,33 +42,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.floref.core.config.consumer.MethodRefMetrics;
-import org.floref.core.config.consumer.MetricsHelper;
-import org.floref.core.config.injector.BeanInjector;
-import org.floref.core.config.FlowConfiguration;
-import org.floref.core.dsl.flow.Flows;
-import org.floref.core.dsl.flow.runtime.Aliases;
-import org.floref.core.dsl.flow.runtime.FlowStep;
-import org.floref.core.exception.FlowDefinitionException;
-import org.floref.core.exception.FlowCancelledException;
-import org.floref.core.exception.MissingBeanFlowException;
-import org.floref.core.flow.annotation.FlowVar;
-import org.floref.core.flow.reference.LambdaMeta;
-import org.floref.core.flow.reference.LambdaMeta.MethodParameter;
-import org.floref.core.flow.reference.LambdaMetaBuilder;
-import org.floref.core.flow.reference.MethodReference;
-import org.floref.core.flow.reference.ParamBiConsumer;
-import org.floref.core.flow.reference.ParamConsumer;
-import org.floref.core.flow.reference.ParamSupplier;
-import org.floref.core.flow.reference.ParamTetraConsumer;
-import org.floref.core.flow.reference.ParamTriConsumer;
-import org.floref.core.flow.reference.ParamVoidConsumerVoidSupplier;
-import org.floref.core.flow.run.CommandContext;
-import org.floref.core.flow.run.FlowSession;
-import org.floref.core.flow.run.FlowUtil;
 
 /**
  * Base flow command class that takes a method reference as a parameter. E.g. .from .to .when .async etc

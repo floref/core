@@ -16,15 +16,15 @@
 
 package org.floref.core.dsl.command;
 
-import static org.floref.core.dsl.command.FlowCommandBuilders.FROM;
-import static org.floref.core.dsl.flow.runtime.FlowImpex.addTypeAndRef;
-
 import org.floref.core.dsl.command.group.ParentCommand;
-import org.floref.core.dsl.flow.runtime.Aliases;
-import org.floref.core.dsl.flow.runtime.FlowStep;
+import org.floref.core.dsl.flow.impex.Aliases;
+import org.floref.core.dsl.flow.impex.FlowStep;
 import org.floref.core.flow.reference.LambdaMeta;
 import org.floref.core.flow.reference.MethodReference;
 import org.floref.core.flow.run.CommandContext;
+
+import static org.floref.core.dsl.command.FlowCommandBuilders.FROM;
+import static org.floref.core.dsl.flow.impex.FlowImpex.addTypeAndRef;
 
 /**
  * .from

@@ -16,57 +16,51 @@
 
 package org.floref.core.dsl.flow.group;
 
-import static org.floref.core.dsl.command.CommandUtil.setAggregator;
+import org.floref.core.dsl.flow.data.FlowInstruction;
+import org.floref.core.dsl.flow.data.FlowInstructionUtil;
+import org.floref.core.flow.reference.*;
 
-import org.floref.core.dsl.command.CommandUtil;
-import org.floref.core.dsl.flow.FlowDsl;
-import org.floref.core.flow.reference.ParamBiConsumer;
-import org.floref.core.flow.reference.ParamConsumer;
-import org.floref.core.flow.reference.ParamHeptaConsumer;
-import org.floref.core.flow.reference.ParamHexaConsumer;
-import org.floref.core.flow.reference.ParamPentaConsumer;
-import org.floref.core.flow.reference.ParamTetraConsumer;
-import org.floref.core.flow.reference.ParamTriConsumer;
+import static org.floref.core.dsl.flow.data.FlowInstructionUtil.setAggregator;
 
 /**
  * Contains group util commands.
  *
  * @author Cristian Donoiu
  */
-public interface GroupUtil<FLOW_DSL> extends FlowDsl<FLOW_DSL> {
+public interface GroupUtil<I> extends FlowInstruction {
 
-  default FLOW_DSL stopOnException() {
-    return CommandUtil.stopOnException(this);
+  default I stopOnException() {
+    return FlowInstructionUtil.stopOnException(this);
   }
-  default FLOW_DSL timeout(long millis) {
-    return CommandUtil.setTimeout(this, millis);
+  default I timeout(long millis) {
+    return FlowInstructionUtil.setTimeout(this, millis);
   }
 
-  default <T> FLOW_DSL aggregator(ParamConsumer<T> consumer) {
+  default <T> I aggregator(ParamConsumer<T> consumer) {
     return setAggregator(this, consumer);
   }
 
-  default <T, U> FLOW_DSL aggregator(ParamBiConsumer<T, U> consumer) {
+  default <T, U> I aggregator(ParamBiConsumer<T, U> consumer) {
     return setAggregator(this, consumer);
   }
 
-  default <T, U, V> FLOW_DSL aggregator(ParamTriConsumer<T, U, V> consumer) {
+  default <T, U, V> I aggregator(ParamTriConsumer<T, U, V> consumer) {
     return setAggregator(this, consumer);
   }
 
-  default <T, U, V, X> FLOW_DSL aggregator(ParamTetraConsumer<T, U, V, X> consumer) {
+  default <T, U, V, X> I aggregator(ParamTetraConsumer<T, U, V, X> consumer) {
     return setAggregator(this, consumer);
   }
 
-  default <T, U, V, X, Y> FLOW_DSL aggregator(ParamPentaConsumer<T, U, V, X, Y> consumer) {
+  default <T, U, V, X, Y> I aggregator(ParamPentaConsumer<T, U, V, X, Y> consumer) {
     return setAggregator(this, consumer);
   }
 
-  default <T, U, V, X, Y, Z> FLOW_DSL aggregator(ParamHexaConsumer<T, U, V, X, Y, Z> consumer) {
+  default <T, U, V, X, Y, Z> I aggregator(ParamHexaConsumer<T, U, V, X, Y, Z> consumer) {
     return setAggregator(this, consumer);
   }
 
-  default <T, U, V, X, Y, Z, A> FLOW_DSL aggregator(ParamHeptaConsumer<T, U, V, X, Y, Z, A> consumer){
+  default <T, U, V, X, Y, Z, A> I aggregator(ParamHeptaConsumer<T, U, V, X, Y, Z, A> consumer){
     return setAggregator(this, consumer);
   }
 

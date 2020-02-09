@@ -16,21 +16,15 @@
 
 package org.floref.core.reference;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
 import org.floref.core.dsl.TestFlows;
 import org.floref.core.dsl.flow.Flows;
-import org.floref.core.dsl.flow.runtime.Aliases;
+import org.floref.core.dsl.flow.impex.Aliases;
 import org.floref.core.exception.FlowDefinitionException;
-import org.floref.core.flow.reference.LambdaMeta;
-import org.floref.core.flow.reference.LambdaMetaBuilder;
-import org.floref.core.flow.reference.MethodReference;
-import org.floref.core.flow.reference.ParamBiConsumer;
-import org.floref.core.flow.reference.ParamTriConsumer;
+import org.floref.core.flow.reference.*;
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.junit.Assert.*;
 
 public class LambdaMetaBuilderTest {
 

@@ -16,12 +16,13 @@
 
 package org.floref.core.flow.build;
 
-import java.lang.reflect.Proxy;
-import org.floref.core.dsl.flow.FlowDefinition;
+import org.floref.core.dsl.flow.data.FlowDefinition;
 import org.floref.core.exception.FlowDefinitionException;
 import org.floref.core.exception.FlowNotAnInterfaceException;
 import org.floref.core.flow.reference.LambdaMeta;
 import org.floref.core.flow.registry.FlowRegistry;
+
+import java.lang.reflect.Proxy;
 
 /**
  *

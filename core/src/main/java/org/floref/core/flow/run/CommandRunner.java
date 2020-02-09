@@ -16,20 +16,13 @@
 
 package org.floref.core.flow.run;
 
-import static org.floref.core.config.FlowConfiguration.commonThreadPoolMaxSize;
-
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.SynchronousQueue;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 import org.floref.core.config.FlowConfiguration;
 import org.floref.core.dsl.command.FlowCommand;
-import org.floref.core.dsl.flow.FlowDefinition;
+import org.floref.core.dsl.flow.data.FlowDefinition;
+
+import java.util.concurrent.*;
+
+import static org.floref.core.config.FlowConfiguration.commonThreadPoolMaxSize;
 
 /**
  * Used to run a flow definition by running and evaluating all the flow definition commands.

@@ -16,15 +16,14 @@
 
 package org.floref.core.flow.build;
 
+import org.floref.core.dsl.flow.data.FlowDefinition;
+import org.floref.core.dsl.flow.impex.FlowStep;
+import org.floref.core.flow.reference.Methods;
+
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-import org.floref.core.dsl.flow.FlowDefinition;
-import org.floref.core.dsl.flow.runtime.FlowStep;
-import org.floref.core.flow.reference.Methods;
-import org.floref.core.flow.registry.FlowRegistry;
 
 public class FlowInstanceData {
   Object flow;

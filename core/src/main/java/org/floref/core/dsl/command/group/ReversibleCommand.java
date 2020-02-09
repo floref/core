@@ -16,23 +16,24 @@
 
 package org.floref.core.dsl.command.group;
 
-import static org.floref.core.dsl.command.FlowCommandBuilders.PARALLEL;
-
-import java.util.ArrayList;
-import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.floref.core.dsl.command.FlowCommand;
 import org.floref.core.dsl.command.MethodReferenceCommand;
 import org.floref.core.flow.run.CommandContext;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.floref.core.dsl.command.FlowCommandBuilders.PARALLEL;
+
 /**
  * .compensate command
  *
  * @author Cristian Donoiu
  */
-public class CompensateCommand extends GroupCommandUtil {
-  private static final Log LOG = LogFactory.getLog(CompensateCommand.class);
+public class ReversibleCommand extends GroupCommandUtil {
+  private static final Log LOG = LogFactory.getLog(ReversibleCommand.class);
 
   @Override
   public void run(CommandContext commandContext) throws Exception {

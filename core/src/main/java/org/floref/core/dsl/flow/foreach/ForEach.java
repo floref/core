@@ -14,15 +14,20 @@
  * limitations under the License.
  */
 
-package org.floref.core.dsl.flow;
+package org.floref.core.dsl.flow.foreach;
+
+import org.floref.core.dsl.flow.Base;
+import org.floref.core.dsl.flow.data.FlowInstruction;
+import org.floref.core.dsl.flow.group.GroupUtil;
 
 /**
- * Base interface for the flow dsl classes.
+ * forEach DSL entry point.
  *
  * @author Cristian Donoiu
  */
-public interface FlowData<FLOW_CLASS> {
+public class ForEach<P, F> extends Base<P, F> implements GroupUtil<ForEach<P, F>> {
 
-  FlowDefinition<FLOW_CLASS> getFlowDefinition();
-
+  public ForEach(FlowInstruction flowInstruction) {
+    copyData(flowInstruction);
+  }
 }

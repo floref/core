@@ -16,17 +16,17 @@
 
 package org.floref.core.dsl.command;
 
-import static org.floref.core.dsl.command.FlowCommandBuilders.WHEN;
-import static org.floref.core.dsl.flow.runtime.FlowImpex.addTypeAndRef;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.floref.core.dsl.command.group.ParentCommand;
-import org.floref.core.dsl.flow.runtime.FlowStep;
+import org.floref.core.dsl.flow.impex.FlowStep;
 import org.floref.core.exception.FlowDefinitionException;
 import org.floref.core.flow.reference.LambdaMeta;
 import org.floref.core.flow.reference.MethodReference;
 import org.floref.core.flow.run.CommandContext;
+
+import static org.floref.core.dsl.command.FlowCommandBuilders.WHEN;
+import static org.floref.core.dsl.flow.impex.FlowImpex.addTypeAndRef;
 
 /**
  * .to

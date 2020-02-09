@@ -14,12 +14,9 @@
  * limitations under the License.
  */
 
-package org.floref.core.dsl.flow;
+package org.floref.core.dsl.flow.data;
 
 
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
 import org.floref.core.dsl.command.FlowCommand;
 import org.floref.core.dsl.command.group.ParentCommand;
 import org.floref.core.dsl.validator.FlowValidator;
@@ -28,6 +25,10 @@ import org.floref.core.flow.reference.LambdaMeta;
 import org.floref.core.flow.reference.LambdaMetaBuilder;
 import org.floref.core.flow.reference.MethodReference;
 import org.floref.core.flow.reference.Methods;
+
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The flow definition contains all the instructions for running a flow. The flow definition id is

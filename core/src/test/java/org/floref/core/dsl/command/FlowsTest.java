@@ -16,23 +16,19 @@
 
 package org.floref.core.dsl.command;
 
-import static org.floref.core.dsl.flow.Flows.from;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.floref.core.dsl.TestFlows;
 import org.floref.core.dsl.TestService;
-import org.floref.core.dsl.flow.FlowData;
 import org.floref.core.dsl.flow.Flows;
 import org.floref.core.exception.FlowDefinitionException;
-import org.floref.core.exception.FlowNotAnInterfaceException;
 import org.floref.core.flow.run.FlowSession;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.floref.core.dsl.flow.Flows.from;
+import static org.junit.Assert.*;
 
 public class FlowsTest {
   private static final Log LOG = LogFactory.getLog(FlowsTest.class);

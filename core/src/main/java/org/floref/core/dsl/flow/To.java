@@ -16,57 +16,56 @@
 
 package org.floref.core.dsl.flow;
 
-import static org.floref.core.dsl.command.FlowCommandBuilders.TO;
-
-import org.floref.core.dsl.command.FlowCommandBuilders;
+import org.floref.core.dsl.flow.data.FlowInstruction;
 import org.floref.core.flow.reference.*;
+
+import static org.floref.core.dsl.command.FlowCommandBuilders.TO;
 
 /**
  * Contains all the .to commands.
  *
  * @author Cristian Donoiu
  */
-public interface To<FLOW_DSL> extends FlowDsl<FLOW_DSL> {
+public interface To<P> extends FlowInstruction {
 
-  // For methods that do not have arguments and return void.
-  default FLOW_DSL to(ParamVoidConsumerVoidSupplier consumer) {
-    return addChild(TO, consumer);
+  default P to(ParamVoidConsumerVoidSupplier consumer) {
+    return (P)getFlowData().addChild(TO, consumer);
   }
 
-  default <T> FLOW_DSL to(ParamSupplier<T> consumer) {
-    return addChild(TO, consumer);
+  default <T> P to(ParamSupplier<T> consumer) {
+    return (P)getFlowData().addChild(TO, consumer);
   }
 
-  default <T> FLOW_DSL to(ParamConsumer<T> consumer) {
-    return addChild(TO, consumer);
+  default <T> P to(ParamConsumer<T> consumer) {
+    return (P)getFlowData().addChild(TO, consumer);
   }
 
-  default <T, U> FLOW_DSL to(ParamBiConsumer<T, U> consumer) {
-    return addChild(TO, consumer);
+  default <T, U> P to(ParamBiConsumer<T, U> consumer) {
+    return (P)getFlowData().addChild(TO, consumer);
   }
 
-  default <T, U, V> FLOW_DSL to(ParamTriConsumer<T, U, V> consumer) {
-    return addChild(TO, consumer);
+  default <T, U, V> P to(ParamTriConsumer<T, U, V> consumer) {
+    return (P)getFlowData().addChild(TO, consumer);
   }
 
-  default <T, U, V, X> FLOW_DSL to(ParamTetraConsumer<T, U, V, X> consumer) {
-    return addChild(TO, consumer);
+  default <T, U, V, X> P to(ParamTetraConsumer<T, U, V, X> consumer) {
+    return (P)getFlowData().addChild(TO, consumer);
   }
 
-  default <T, U, V, X, Y> FLOW_DSL to(ParamPentaConsumer<T, U, V, X, Y> consumer) {
-    return addChild(TO, consumer);
+  default <T, U, V, X, Y> P to(ParamPentaConsumer<T, U, V, X, Y> consumer) {
+    return (P)getFlowData().addChild(TO, consumer);
   }
 
-  default <T, U, V, X, Y, Z> FLOW_DSL to(ParamHexaConsumer<T, U, V, X, Y, Z> consumer) {
-    return addChild(TO, consumer);
+  default <T, U, V, X, Y, Z> P to(ParamHexaConsumer<T, U, V, X, Y, Z> consumer) {
+    return (P)getFlowData().addChild(TO, consumer);
   }
 
-  default <T, U, V, X, Y, Z, A> FLOW_DSL to(ParamHeptaConsumer<T, U, V, X, Y, Z, A> consumer){
-    return addChild(TO, consumer);
+  default <T, U, V, X, Y, Z, A> P to(ParamHeptaConsumer<T, U, V, X, Y, Z, A> consumer){
+    return (P)getFlowData().addChild(TO, consumer);
   }
 
-  default <T> FLOW_DSL to(LambdaMeta<T> lambdaMeta) {
-    return addChild(TO, lambdaMeta);
+  default <T> P to(LambdaMeta<T> lambdaMeta) {
+    return (P)getFlowData().addChild(TO, lambdaMeta);
   }
 
   //  @FunctionalInterface
@@ -76,4 +75,9 @@ public interface To<FLOW_DSL> extends FlowDsl<FLOW_DSL> {
 //  public static void to(TwoParam<?> c) {  // Consider allowing inline lambda expressions .to((a,b) -> {...}) still this will miss type information.
 //
 //  }
+
+  default P alias(String alias) {
+    getFlowData().getCurrentCommand().alias(alias);
+    return (P)this;
+  }
 }

@@ -14,22 +14,20 @@
  * limitations under the License.
  */
 
-package org.floref.core.dsl.flow.group;
+package org.floref.core.dsl.flow.foreach;
 
-import static org.floref.core.dsl.command.FlowCommandBuilders.PARALLEL;
+import org.floref.core.dsl.flow.data.FlowInstruction;
 
-import org.floref.core.dsl.command.FlowCommandBuilders;
-import org.floref.core.dsl.flow.FlowDsl;
+import static org.floref.core.dsl.command.FlowCommandBuilders.FOR_EACH;
 
 /**
- * Contains .parallel command and utils.
+ * Contains .forEach command.
  *
  * @author Cristian Donoiu
  */
-public interface Parallel<FLOW_DSL> extends FlowDsl<FLOW_DSL>, GroupUtil<FLOW_DSL> {
-
-  default FLOW_DSL parallel() {
-    return addParent(PARALLEL);
+public interface IForEach<P, F> extends FlowInstruction {
+  default ForEach<P, F> forEach() {
+    getFlowData().addParent(FOR_EACH);
+    return new ForEach(this);
   }
-
 }

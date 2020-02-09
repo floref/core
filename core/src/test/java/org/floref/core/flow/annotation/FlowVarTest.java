@@ -16,21 +16,19 @@
 
 package org.floref.core.flow.annotation;
 
-import static org.floref.core.dsl.flow.Flows.from;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
-import org.floref.core.config.injector.BeanInjector;
 import org.floref.core.config.FlowConfiguration;
+import org.floref.core.config.injector.BeanInjector;
 import org.floref.core.dsl.TestFlows;
 import org.floref.core.dsl.TestInterface;
 import org.floref.core.dsl.TestInterfaceImpl;
-import org.floref.core.dsl.flow.FlowDefinition;
 import org.floref.core.dsl.flow.Flows;
 import org.floref.core.exception.FlowDefinitionException;
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.floref.core.dsl.flow.Flows.from;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 public class FlowVarTest {
 

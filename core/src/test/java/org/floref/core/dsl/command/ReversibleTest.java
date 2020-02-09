@@ -16,13 +16,13 @@
 
 package org.floref.core.dsl.command;
 
+import org.junit.Test;
+
 import static org.floref.core.dsl.flow.Flows.from;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import org.junit.Test;
-
-public class CompensateTest {
+public class ReversibleTest {
   public class Pojo { // some pojo
     int i;
   }
@@ -50,9 +50,9 @@ public class CompensateTest {
   }
   @Test
   public void test() {
-    CompensateTest test = new CompensateTest();
+    ReversibleTest test = new ReversibleTest();
     Flows flows = from(Flows::testRevert)
-        .compensate()
+        .reversible()
           .to(test::plus).revertBy(test::minus)
           .to(test::multiply).revertBy(test::divide)
           .to(test::failHere)

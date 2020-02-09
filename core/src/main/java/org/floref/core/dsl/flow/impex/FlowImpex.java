@@ -14,23 +14,24 @@
  * limitations under the License.
  */
 
-package org.floref.core.dsl.flow.runtime;
+package org.floref.core.dsl.flow.impex;
 
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Objects;
 import mjson.Json;
 import org.floref.core.dsl.command.FlowCommand;
 import org.floref.core.dsl.command.MethodReferenceCommand;
-import org.floref.core.dsl.flow.FlowBase;
-import org.floref.core.dsl.flow.FlowDefinition;
+import org.floref.core.dsl.flow.Base;
 import org.floref.core.dsl.flow.Flows;
 import org.floref.core.exception.FlowDefinitionException;
 import org.floref.core.flow.build.FlowInstanceData;
 import org.floref.core.flow.reference.LambdaMeta;
 import org.floref.core.flow.registry.FlowRegistry;
 
-import static org.floref.core.dsl.command.FlowCommandBuilders.*;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Objects;
+
+import static org.floref.core.dsl.command.FlowCommandBuilders.FORK;
+import static org.floref.core.dsl.command.FlowCommandBuilders.TO;
 
 /**
  * JSON related utils.
@@ -66,34 +67,34 @@ public class FlowImpex {
   }
 
 
-  private static void importFlow(FlowStep flowStep, FlowBase flowBase) {
+  private static void importFlow(FlowStep flowStep, Base base) {
     for (FlowStep step: flowStep.getChildren()) {
       LambdaMeta lambdaMeta = step.getRefLambdaMeta();
       switch (step.getType()) {
         case TO: {
-          flowBase.to(lambdaMeta);
+          base.to(lambdaMeta);
           break;
         }
         case FORK: {
-          flowBase.fork(lambdaMeta);
+          base.fork(lambdaMeta);
           break;
         }
-        case WHEN: {
-          flowBase.when(lambdaMeta);
-          for (FlowStep child : step.getChildren()) {
-            importFlow(child, flowBase);
-          }
-          flowBase.end();
-          break;
-        }
-        case OTHERWISE: {
-          flowBase.otherwise();
-          for (FlowStep child : step.getChildren()) {
-            importFlow(child, flowBase);
-          }
-          flowBase.end();
-          break;
-        }
+//        case WHEN: {
+//          flowBase.when(lambdaMeta);
+//          for (FlowStep child : step.getChildren()) {
+//            importFlow(child, flowBase);
+//          }
+//          flowBase.end();
+//          break;
+//        }
+//        case OTHERWISE: {
+//          flowBase.otherwise();
+//          for (FlowStep child : step.getChildren()) {
+//            importFlow(child, flowBase);
+//          }
+//          flowBase.end();
+//          break;
+//        }
         default: {
           throw new FlowDefinitionException("Unsupported step type: " + step.getType());
         }
@@ -111,9 +112,9 @@ public class FlowImpex {
     // Import/overwrite flows.
     for (FlowStep flow : payload.getFlows()) {
       LambdaMeta from = flow.getRefLambdaMeta();
-      FlowBase flowBase = Flows.from(from);
-      importFlow(flow, flowBase);
-      Object flowInstance = flowBase.build();
+      Base base = Flows.from(from);
+      importFlow(flow, base);
+      Object flowInstance = base.build();
     }
   }
 }

@@ -18,7 +18,7 @@ package org.floref.core.dsl.validator;
 
 import org.floref.core.dsl.command.FlowCommand;
 import org.floref.core.dsl.command.MethodReferenceCommand;
-import org.floref.core.dsl.flow.FlowDefinition;
+import org.floref.core.dsl.flow.data.FlowDefinition;
 
 /**
  * Flow validator class.

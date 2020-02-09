@@ -16,13 +16,10 @@
 
 package org.floref.core.flow.run;
 
-import java.util.Map;
-
 import org.floref.core.config.FlowConfiguration;
 import org.floref.core.config.injector.BeanInjector;
 import org.floref.core.dsl.flow.Flows;
-import org.floref.core.dsl.flow.runtime.Aliases;
-import org.floref.core.flow.registry.FlowRegistry;
+import org.floref.core.dsl.flow.impex.Aliases;
 
 public class FlowUtil {
   public static final String CANCELLED = "__FLOREF_cancelled";
@@ -54,5 +51,6 @@ public class FlowUtil {
       }
     });
   }
+
 }
 

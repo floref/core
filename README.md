@@ -1,26 +1,33 @@
-# Floref - the functional flow
-Floref is a Java functional workflow engine based on functional programming with the **method reference as the building
+# Floref
+Floref comes from **flo**w **ref**erence. A flow reference is a method reference towards a flow starting method.
+Floref is a Java workflow engine based on functional programming with the **method reference as the building
  block**: <br>
-- Method references are used to refer/run existing code and also other workflows. 
-- Define a flow using simple **fluent** instructions that act on method references. <br>
-- **Runtime** flow creation or flow updates (from a database/UI) are easy because of method references and their aliases. 
+- Method references are used to refer/run existing code or other workflows. 
+- Define a flow using fluent instructions that act on method references. <br>
+- Runtime flow import/update (from a database/UI) can be done by using method references and their aliases. 
 
-# 3 - Make it simple
+# What is a flow
+*A workflow consists of an orchestrated and repeatable pattern of activity ... (wikipedia)*.
+Translated into code: **a workflow is a method from an interface** also called the flow start method since it uniquely 
+identifies the flow.<br>
+Floref fluent API is used to create a flow definition in 3 steps.
+
+# The 3 steps
 ```java
-// 1. Create an interface containing flow start methods.
+// 1. Create interface with flow start methods with any name/parameters/return.
 public interface JobFlows {
   Job processJob(Job job); // flow 1
   void recordJob(...);     // flow 2
 }
 
-// 2. Flow definition and building.
-JobFlows flows = Flows.from(JobFlows::processJob)     // from(<flow start method>)
-  .to(anyBean::validateData)    // existing code (e.g. Spring bean/service)
-  .fork(JobFlows::recordJob)    // starts another flow independently
+// 2. Define and build.
+JobFlows flows = Flows.from(JobFlows::processJob)
+  .to(anyBean::validateData)    // call any object
+  .fork(JobFlows::recordJob)    // call another flow
   .retry(anyBean::method).times(10).delay(1000)  // retry
   .build();
 
-// 3. Run the flow.
+// 3. Run.
 flows.processJob(job);
 ```
 Step 1 (and step 3) are **unrestricted developer API**. Any interface method can become a flow. <br>
@@ -29,7 +36,7 @@ Step 3: **no external APIs needed to run a flow**, just call the flow start meth
 Defining and running a flow can not be simpler than this. <br>
 A flow is uniquely identified by an **interface method** which is natural since its implementation varies over time. <br>
 The `Flows` class used to define and build flows is generic so the returned flow instance is same type as the interface from the `from` command. <br>
-The DSL has many checks and validations in place so that the defined flow is **always valid**. 
+The definition has both compile and runtime checks in place so that the defined flow is **always valid**. 
 
 ## Instructions
 Remember there is only one building block - the method reference (aka flow step) but in order to construct 
@@ -43,13 +50,23 @@ The commands cover many **method integration patterns**, with detailed info in t
 - [`when/otherwise`](README.md#when-otherwise) conditional execution of grouped steps.
 - [`parallel`](README.md#parallel) executes multiple flow steps in parallel (on the same input) and then continues.
 - [`forEach`](README.md#forEach) execute grouped steps for each element from a `Collection` input.
-- [`compensate`](README.md#compensate) executes compensable actions in reverse order starting from the last failed step in reverse, useful when having many 3rd party integrations to reconcile with.
-- [`retry`](README.md#retry) retry able flow step, e.g. retrying REST calls if server is busy
+- [`reversible`](README.md#reversible) executes revert actions in reverse order starting from the last failed step, useful when having many 3rd party integrations to reconcile with.
+- [`retry`](README.md#retry) retry able flow step, usage example: retrying REST calls if server is busy.
 - `circuitBreaker` for short circuiting when the number of failures reaches a certain threshold.
 - etc, see [Instructions reference](README.md#Instructions-reference)<br>
 
-**NOTE**: If you need to **request a new feature or report a bug** please open a new issue in github (from the "Issues" tab)
-      or send a mail with the details to org.floref`at`gmail.com. Thank you much.
+**NOTE**: 
+1. The instructions are **context constrained** depending on the current and parent instruction. For example you will not be able to 
+code compile an `otherwise` before a `when`, commands specifics like `.delay`, `aggregator`, `revertBy`, etc will be 
+accessible only if the previous/containing command within the fluent API was a corresponding command.
+This is a unique feature of Floref that makes sure the flows are valid early on at compile time.
+![missplaced](doc/images/Missplaced.png)
+![](doc/images/Safe%20syntax%201.png)
+![too many end](doc/images/too%20many%20ends.png)
+2. Combining the different instructions within same or separate flows should cover most of the use cases. Remember that
+ with `.to(class::method)` you can call both an existing bean or another flow.
+3. If you need to **request a new feature or report a bug** please open a new issue in github from the "Issues" 
+tab. Thank you very much. Also **contributions or collaborations proposals are welcomed**.
 
 ## Flow runtime create/update
 Having the method references as the building block, allows a flow to be created at runtime with no compilation needed.
@@ -449,11 +466,11 @@ public class ForEachCommandTest {
 }
 ```
 
-## `compensate`
+## `reversible`
+Emulates the concept of [compensating transactions](https://en.wikipedia.org/wiki/Compensating_transaction). <br>
 When there is a need to call multiple external systems (integrations) and one of them could fail it would be normal to 
 do a revert in all the systems that were called until that moment and in **reverse order**. For example if systems A, B, C
-are to be called one by one and C fails then revert B and then revert A.
-```java
+are called one after the other and C fails then revert B and then revert A. ```java
 public class CompensateTest {
   public class Pojo { // some pojo
     int i;
@@ -484,7 +501,7 @@ public class CompensateTest {
   public void test() {
     CompensateTest test = new CompensateTest();
     Flows flows = from(Flows::testRevert)
-        .compensate()
+        .reversible()
           .to(test::plus).revertBy(test::minus)
           .to(test::multiply).revertBy(test::divide)
           .to(test::failHere)
@@ -502,6 +519,36 @@ public class CompensateTest {
 }
 ```
 
+## `retry`
+This is very useful when working with IO or calling external systems that may be busy at the moment but will be able to
+satisfy the request sometimes later.
+Fixed delay, exponential delay can be used, or a more custom delay can be added.
+```java
+public class RetryTest {
+
+  public void callRestClient(StringBuilder context) throws TimeoutException {
+    context.append(".");
+    if ( context.length() < 3) {
+      throw new TimeoutException("Server busy, try again later");
+    }
+    context.append("done");
+  }
+  public interface RetryFlow {
+     void retryCall(StringBuilder context);
+  }
+  @Test
+  public void test() {
+    RetryTest test = new RetryTest();
+    RetryFlow flow = Flows.from(RetryFlow::retryCall)
+        .retry(test::callRestClient).delay(100).times(10).on(TimeoutException.class)
+        .build();
+
+    StringBuilder data = new StringBuilder("");
+    flow.retryCall(data);
+    assertEquals("...done", data.toString());
+  }
+}
+```
 
 ## Group commands rules
 1. All group commands are **eager**. In the absence of an `end()` they group everything that follows.

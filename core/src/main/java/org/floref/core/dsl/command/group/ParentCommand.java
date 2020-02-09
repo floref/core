@@ -16,14 +16,13 @@
 
 package org.floref.core.dsl.command.group;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import org.floref.core.dsl.command.FlowCommand;
 import org.floref.core.dsl.command.ChildCommand;
-import org.floref.core.dsl.flow.runtime.FlowStep;
+import org.floref.core.dsl.command.FlowCommand;
+import org.floref.core.dsl.flow.impex.FlowStep;
 import org.floref.core.flow.run.CommandContext;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Group command that can group multiple child commands.

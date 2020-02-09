@@ -14,34 +14,20 @@
  * limitations under the License.
  */
 
-package org.floref.core.dsl.flow.runtime;
+package org.floref.core.dsl.flow.impex;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.floref.core.config.FlowConfiguration;
 import org.floref.core.config.injector.BeanInjector;
 import org.floref.core.dsl.command.MethodReferenceCommand;
-import org.floref.core.dsl.flow.FlowDefinition;
-import org.floref.core.dsl.flow.Flows;
 import org.floref.core.exception.FlowDefinitionException;
-import org.floref.core.flow.build.FlowInstanceData;
-import org.floref.core.flow.reference.LambdaMeta;
-import org.floref.core.flow.reference.LambdaMetaBuilder;
-import org.floref.core.flow.reference.MethodReference;
-import org.floref.core.flow.reference.Methods;
-import org.floref.core.flow.reference.ParamBiConsumer;
-import org.floref.core.flow.reference.ParamConsumer;
-import org.floref.core.flow.reference.ParamHeptaConsumer;
-import org.floref.core.flow.reference.ParamHexaConsumer;
-import org.floref.core.flow.reference.ParamPentaConsumer;
-import org.floref.core.flow.reference.ParamSupplier;
-import org.floref.core.flow.reference.ParamTetraConsumer;
-import org.floref.core.flow.reference.ParamTriConsumer;
-import org.floref.core.flow.reference.ParamVoidConsumerVoidSupplier;
+import org.floref.core.flow.reference.*;
 import org.floref.core.flow.registry.FlowRegistry;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Represents a String alias for a method reference. The aliases are of 2 different types:
@@ -174,7 +160,6 @@ public class Aliases {
     add(alias, methodReferenceAsString);
   }
 
-  // For methods that do not have arguments and return void.
   public static void alias(String alias, ParamVoidConsumerVoidSupplier consumer) {
     add(alias, consumer);
   }

@@ -16,15 +16,16 @@
 
 package org.floref.core.dsl.flow;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Objects;
-
-import org.floref.core.dsl.flow.runtime.FlowImpex;
+import org.floref.core.dsl.flow.data.FlowDefinition;
+import org.floref.core.dsl.flow.impex.FlowImpex;
 import org.floref.core.exception.FlowValidationException;
 import org.floref.core.flow.build.FlowInstanceData;
 import org.floref.core.flow.reference.*;
 import org.floref.core.flow.registry.FlowRegistry;
+
+import java.util.Iterator;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * Used to define/build a flow and also to export/import flows.
@@ -38,47 +39,47 @@ public class Flows {
   /**
    * Call it to startCommand the definition of a workflow.
    */
-  public static <FLOW_CLASS> FlowBase<FLOW_CLASS> from(ParamSupplier<FLOW_CLASS> consumer) {
+  public static <FLOW_CLASS> Base<From<FLOW_CLASS>, FLOW_CLASS> from(ParamSupplier<FLOW_CLASS> consumer) {
     return new From().from(consumer);
   }
 
-  public static <FLOW_CLASS> FlowBase<FLOW_CLASS> from(ParamConsumer<FLOW_CLASS> consumer) {
+  public static <FLOW_CLASS> Base<From<FLOW_CLASS>, FLOW_CLASS> from(ParamConsumer<FLOW_CLASS> consumer) {
     return new From().from(consumer);
   }
 
-  public static <FLOW_CLASS, U> FlowBase<FLOW_CLASS> from(ParamBiConsumer<FLOW_CLASS, U> consumer) {
+  public static <FLOW_CLASS, U> Base<From<FLOW_CLASS>, FLOW_CLASS> from(ParamBiConsumer<FLOW_CLASS, U> consumer) {
     return new From().from(consumer);
   }
 
-  public static <FLOW_CLASS, U, V> FlowBase<FLOW_CLASS> from(ParamTriConsumer<FLOW_CLASS, U, V> consumer) {
+  public static <FLOW_CLASS, U, V> Base<From<FLOW_CLASS>, FLOW_CLASS> from(ParamTriConsumer<FLOW_CLASS, U, V> consumer) {
     return new From().from(consumer);
   }
 
-  public static <FLOW_CLASS, U, V, X> FlowBase<FLOW_CLASS> from(ParamTetraConsumer<FLOW_CLASS, U, V, X> consumer) {
+  public static <FLOW_CLASS, U, V, X> Base<From<FLOW_CLASS>, FLOW_CLASS> from(ParamTetraConsumer<FLOW_CLASS, U, V, X> consumer) {
     return new From().from(consumer);
   }
 
-  public static <FLOW_CLASS, U, V, X, Y> FlowBase<FLOW_CLASS> from(
+  public static <FLOW_CLASS, U, V, X, Y> Base<From<FLOW_CLASS>, FLOW_CLASS> from(
       ParamPentaConsumer<FLOW_CLASS, U, V, X, Y> consumer) {
     return new From().from(consumer);
   }
 
-  public static <FLOW_CLASS, U, V, X, Y, Z> FlowBase<FLOW_CLASS> from(
+  public static <FLOW_CLASS, U, V, X, Y, Z> Base<From<FLOW_CLASS>, FLOW_CLASS> from(
       ParamHexaConsumer<FLOW_CLASS, U, V, X, Y, Z> consumer) {
     return new From().from(consumer);
   }
 
-  public static <FLOW_CLASS, U, V, X, Y, Z, A> FlowBase<FLOW_CLASS> from(
+  public static <FLOW_CLASS, U, V, X, Y, Z, A> Base<From<FLOW_CLASS>, FLOW_CLASS> from(
       ParamHeptaConsumer<FLOW_CLASS, U, V, X, Y, Z, A> consumer) {
     return new From().from(consumer);
   }
 
-  public static <FLOW_CLASS, U, V, X, Y, Z, A, B> FlowBase<FLOW_CLASS> from(
+  public static <FLOW_CLASS, U, V, X, Y, Z, A, B> Base<From<FLOW_CLASS>, FLOW_CLASS> from(
       ParamOctaConsumer<FLOW_CLASS, U, V, X, Y, Z, A, B> consumer) {
     return new From().from(consumer);
   }
 
-  public static <FLOW_CLASS> FlowBase<FLOW_CLASS> from(LambdaMeta<FLOW_CLASS> lambdaMeta) {
+  public static <FLOW_CLASS> Base<From<FLOW_CLASS>, FLOW_CLASS> from(LambdaMeta<FLOW_CLASS> lambdaMeta) {
     return new From().from(lambdaMeta);
   }
 

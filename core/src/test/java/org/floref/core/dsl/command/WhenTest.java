@@ -16,19 +16,16 @@
 
 package org.floref.core.dsl.command;
 
-import static org.floref.core.dsl.flow.Flows.from;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
 import org.floref.core.dsl.TestFlows;
 import org.floref.core.dsl.TestService;
 import org.floref.core.dsl.flow.Flows;
-import org.floref.core.exception.FlowDefinitionException;
 import org.junit.Before;
 import org.junit.Test;
 
-public class WhenOtherwiseTest {
+import static org.floref.core.dsl.flow.Flows.from;
+import static org.junit.Assert.assertEquals;
+
+public class WhenTest {
 
   public boolean lengthMultipleOf2(String s) {
     return s.length() % 2 == 0;
@@ -91,41 +88,6 @@ public class WhenOtherwiseTest {
 
     String s = flows.processOneStringReturnString("abc");
     assertEquals("abc", s);
-  }
-
-  @Test
-  public void testInvalidOtherwise() {
-    TestService testService = new TestService();
-
-    try {
-      TestFlows flows = from(TestFlows::processOneStringReturnString)
-          .to(testService::toUpperCase)
-          .otherwise()
-          .to(testService::toLowerCase)
-          .build();
-    } catch (FlowDefinitionException e) {
-      assertTrue(e.getMessage().contains(".otherwise() has no corresponding 'when()'"));
-      return;
-    }
-    fail();
-  }
-
-  @Test
-  public void testTooManyEnds() {
-    TestService testService = new TestService();
-
-    try {
-      TestFlows flows = from(TestFlows::processOneStringReturnString)
-          .when(this::lengthMultipleOf2)
-          .to(testService::toUpperCase)
-          .end()
-          .end()
-          .build();
-    } catch (FlowDefinitionException e) {
-      assertTrue(e.getMessage().contains("'.end()' is missing a block command to be ended. Too many '.end()'."));
-      return;
-    }
-    fail();
   }
 
   //Group commands are **eager**. In the absence of an `end()` they group everything that follows.

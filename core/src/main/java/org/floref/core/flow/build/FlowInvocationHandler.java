@@ -16,6 +16,17 @@
 
 package org.floref.core.flow.build;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.floref.core.config.consumer.FlowMetrics;
+import org.floref.core.config.consumer.MetricsHelper;
+import org.floref.core.dsl.flow.data.FlowDefinition;
+import org.floref.core.exception.FlowDefinitionException;
+import org.floref.core.flow.reference.LambdaMeta;
+import org.floref.core.flow.reference.LambdaMeta.MethodParameter;
+import org.floref.core.flow.run.CommandRunner;
+import org.floref.core.flow.run.FlowSession;
+
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.util.List;
@@ -23,16 +34,6 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.floref.core.config.consumer.FlowMetrics;
-import org.floref.core.config.consumer.MetricsHelper;
-import org.floref.core.dsl.flow.FlowDefinition;
-import org.floref.core.exception.FlowDefinitionException;
-import org.floref.core.flow.reference.LambdaMeta;
-import org.floref.core.flow.reference.LambdaMeta.MethodParameter;
-import org.floref.core.flow.run.CommandRunner;
-import org.floref.core.flow.run.FlowSession;
 
 /**
  * For each interface for which we define flows there will be a single proxy(start instance) doing the magic.

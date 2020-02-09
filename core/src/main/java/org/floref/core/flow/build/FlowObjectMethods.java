@@ -16,12 +16,13 @@
 
 package org.floref.core.flow.build;
 
+import org.floref.core.dsl.command.FlowCommand;
+import org.floref.core.dsl.flow.data.FlowDefinition;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.floref.core.dsl.command.FlowCommand;
-import org.floref.core.dsl.flow.FlowDefinition;
 
 public class FlowObjectMethods {
   public static final String EQUALS = "equals";

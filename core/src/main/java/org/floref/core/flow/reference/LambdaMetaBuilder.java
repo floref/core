@@ -16,18 +16,14 @@
 
 package org.floref.core.flow.reference;
 
-import static org.floref.core.flow.reference.Methods.getMethod;
+import org.floref.core.exception.FlowDefinitionException;
 
 import java.lang.invoke.SerializedLambda;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import org.floref.core.exception.FlowDefinitionException;
+
+import static org.floref.core.flow.reference.Methods.getMethod;
 
 /**
  * Used to obtain method reference metadata.
@@ -53,7 +49,7 @@ public class LambdaMetaBuilder {
 
         return serializedLambda;
       } catch (NoSuchMethodException e) {
-        throw new IllegalArgumentException("not a lambda");
+        throw new IllegalArgumentException("not a lambda ");
       } catch (SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
         throw new RuntimeException("can not serialize lambda", e);
       } catch (NoSuchMethodError e) {

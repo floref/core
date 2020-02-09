@@ -16,16 +16,15 @@
 
 package org.floref.core.flow.registry;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.floref.core.dsl.flow.data.FlowDefinition;
+import org.floref.core.flow.build.FlowInstanceData;
+import org.floref.core.flow.build.FlowInvocationHandler;
+
 import java.lang.reflect.Proxy;
 import java.util.Iterator;
 import java.util.concurrent.ConcurrentHashMap;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.floref.core.dsl.flow.FlowDefinition;
-import org.floref.core.exception.FlowDefinitionException;
-import org.floref.core.flow.build.FlowInstanceData;
-import org.floref.core.flow.build.FlowInvocationHandler;
-import org.floref.core.flow.reference.LambdaMeta;
 
 /**
  * Keeps track of all the flow instances.

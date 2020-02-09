@@ -16,13 +16,13 @@
 
 package org.floref.core.dsl.command;
 
-import static org.floref.core.dsl.command.FlowCommandBuilders.OTHERWISE;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.floref.core.dsl.command.group.ParentCommand;
-import org.floref.core.dsl.flow.runtime.FlowStep;
+import org.floref.core.dsl.flow.impex.FlowStep;
 import org.floref.core.flow.run.CommandContext;
+
+import static org.floref.core.dsl.command.FlowCommandBuilders.OTHERWISE;
 
 /**
  * .otherwise

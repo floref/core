@@ -16,18 +16,19 @@
 
 package org.floref.core.dsl.command;
 
-import static org.floref.core.dsl.command.FlowCommandBuilders.FORK;
-
-import java.util.Map;
-import java.util.concurrent.Callable;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.floref.core.dsl.flow.runtime.FlowStep;
+import org.floref.core.dsl.flow.impex.FlowStep;
 import org.floref.core.flow.reference.LambdaMeta;
 import org.floref.core.flow.reference.MethodReference;
 import org.floref.core.flow.run.CommandContext;
 import org.floref.core.flow.run.CommandRunner;
 import org.floref.core.flow.run.FlowSession;
+
+import java.util.Map;
+import java.util.concurrent.Callable;
+
+import static org.floref.core.dsl.command.FlowCommandBuilders.FORK;
 
 /**
  * .to

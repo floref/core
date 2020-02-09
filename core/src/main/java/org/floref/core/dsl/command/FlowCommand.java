@@ -16,11 +16,9 @@
 
 package org.floref.core.dsl.command;
 
-import java.util.Map;
 import org.floref.core.dsl.command.group.ParentCommand;
-import org.floref.core.dsl.flow.runtime.FlowStep;
+import org.floref.core.dsl.flow.impex.FlowStep;
 import org.floref.core.exception.FlowDefinitionException;
-import org.floref.core.flow.build.FlowObjectMethods.ToStringIndexes;
 import org.floref.core.flow.run.CommandContext;
 
 /**

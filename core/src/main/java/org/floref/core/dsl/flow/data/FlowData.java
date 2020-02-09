@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
-package org.floref.core.dsl.flow;
+package org.floref.core.dsl.flow.data;
 
 import org.floref.core.dsl.command.FlowCommand;
+import org.floref.core.dsl.command.FlowCommandBuilders;
 import org.floref.core.dsl.command.group.ParentCommand;
 
 /**
@@ -24,33 +25,29 @@ import org.floref.core.dsl.command.group.ParentCommand;
  *
  * @author Cristian Donoiu
  */
-public class FlowDataImpl<FLOW_DSL extends FlowData, FLOW_CLASS>
-    implements FlowData<FLOW_CLASS>, FlowDsl<FLOW_DSL> {
+public class FlowData<I, F> {   // I flow instruction, F flow class
 
-  protected FlowDefinition<FLOW_CLASS> flowDefinition;
+  protected FlowDefinition<F> flowDefinition;
   protected ParentCommand currentParent;
   protected FlowCommand currentCommand;
+  protected I instruction;
 
-  @Override
-  public FlowDefinition<FLOW_CLASS> getFlowDefinition() {
+  public FlowDefinition<F> getFlowDefinition() {
     return flowDefinition;
   }
 
-  public void setFlowDefinition(FlowDefinition<FLOW_CLASS> flowDefinition) {
+  public void setFlowDefinition(FlowDefinition<F> flowDefinition) {
     this.flowDefinition = flowDefinition;
   }
 
-  @Override
   public ParentCommand getCurrentParent() {
     return currentParent;
   }
 
-  @Override
   public void setCurrentParent(ParentCommand flowCommand) {
     currentParent = flowCommand;
   }
 
-  @Override
   public void setCurrentParentAndRelations(ParentCommand flowCommand) {
     ParentCommand currentParent = getCurrentParent();
     if (currentParent != null) {
@@ -60,13 +57,38 @@ public class FlowDataImpl<FLOW_DSL extends FlowData, FLOW_CLASS>
     setCurrentParent(flowCommand);
   }
 
-  @Override
   public FlowCommand getCurrentCommand() {
     return currentCommand;
   }
 
-  @Override
   public void setCurrentCommand(FlowCommand flowCommand) {
     currentCommand = flowCommand;
+  }
+
+  public I addChild(FlowCommand flowCommand) {
+    getCurrentParent().addChild(flowCommand);  // command set currentParent from dsl and inverse
+    setCurrentCommand(flowCommand);
+    return instruction;
+  }
+
+  public I addChild(String id, Object... params) {
+    FlowCommand flowCommand = FlowCommandBuilders.build(id, params);
+    this.setCurrentCommand(flowCommand);
+    return addChild(flowCommand);
+  }
+
+  public I addParent(String id, Object... params) {
+    ParentCommand flowCommand = (ParentCommand)FlowCommandBuilders.build(id, params);
+    setCurrentParentAndRelations(flowCommand);
+    setCurrentCommand(flowCommand);
+    return instruction;
+  }
+
+  public I getInstruction() {
+    return instruction;
+  }
+
+  public void setInstruction(I instruction) {
+    this.instruction = instruction;
   }
 }

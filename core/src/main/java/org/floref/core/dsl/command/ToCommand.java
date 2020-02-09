@@ -16,13 +16,13 @@
 
 package org.floref.core.dsl.command;
 
-import static org.floref.core.dsl.command.FlowCommandBuilders.TO;
-
-import org.floref.core.dsl.flow.runtime.FlowStep;
-import org.floref.core.flow.reference.LambdaMeta;
-import org.floref.core.flow.reference.MethodReference;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.floref.core.dsl.flow.impex.FlowStep;
+import org.floref.core.flow.reference.LambdaMeta;
+import org.floref.core.flow.reference.MethodReference;
+
+import static org.floref.core.dsl.command.FlowCommandBuilders.TO;
 
 /**
  * .to

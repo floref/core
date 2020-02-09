@@ -16,20 +16,20 @@
 
 package org.floref.core.flow.alias;
 
-import static junit.framework.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
 import org.floref.core.config.FlowConfiguration;
 import org.floref.core.config.injector.BeanInjector;
 import org.floref.core.dsl.flow.Flows;
-import org.floref.core.dsl.flow.runtime.Aliases;
+import org.floref.core.dsl.flow.impex.Aliases;
 import org.floref.core.exception.FlowDefinitionException;
 import org.floref.core.flow.run.FlowUtil;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.LinkedHashMap;
+
+import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 public class AliasesTest {
 

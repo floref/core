@@ -16,7 +16,7 @@
 
 package org.floref.core.flow.run;
 
-import org.floref.core.dsl.flow.FlowDefinition;
+import org.floref.core.dsl.flow.data.FlowDefinition;
 
 /**
  * Keeps execution information related to a command from the flow.
