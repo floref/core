@@ -21,6 +21,7 @@ import org.apache.commons.logging.LogFactory;
 import org.floref.core.dsl.TestFlows;
 import org.floref.core.dsl.TestService;
 import org.floref.core.dsl.flow.Flows;
+import org.floref.core.dsl.flow.FromSingular;
 import org.floref.core.exception.FlowDefinitionException;
 import org.floref.core.flow.run.FlowSession;
 import org.junit.After;
@@ -211,4 +212,24 @@ public class FlowsTest {
 //  }
   // Test method that returns void within the flow.
 
+
+  public interface FlowTest {
+    int f(int i);
+  }
+  public void f2(String i) {
+    System.out.println(i);
+  }
+  public void f3(int i, int j) {
+    System.out.println(i);
+  }
+  @Test
+  public void testSingular() {
+    FromSingular<FlowTest> fromSingular = new FromSingular();
+    FlowsTest test = new FlowsTest();
+
+    fromSingular.from(FlowTest::f)
+        .to(test::f2)
+        .to(test::f3)
+        .build();
+  }
 }
