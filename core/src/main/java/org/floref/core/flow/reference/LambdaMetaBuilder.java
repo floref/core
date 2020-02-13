@@ -70,13 +70,14 @@ public class LambdaMetaBuilder {
     } catch (ClassNotFoundException e) {
       throw new FlowDefinitionException("Can not find class of method reference", e);
     }
-    if (!Modifier.isPublic(lambdaMeta.getLambdaClass().getModifiers())) {
-      throw new FlowDefinitionException("Class " + lambdaMeta.getLambdaClass().getCanonicalName() + " should be public.");
-    }
+//    if (!Modifier.isPublic(lambdaMeta.getLambdaClass().getModifiers())) {
+//      throw new FlowDefinitionException("Class " + lambdaMeta.getLambdaClass().getCanonicalName() + " should be public.");
+//    }
 
     Method method = getMethod(lambdaMeta.getLambdaClass(), serializedLambda.getImplMethodName());
     if (!Modifier.isPublic(method.getModifiers())) {
-      throw new FlowDefinitionException("Method " + Methods.getMethodReferenceAsString(method) + " should be public.");
+//      throw new FlowDefinitionException("Method " + Methods.getMethodReferenceAsString(method) + " should be public.");
+      method.setAccessible(true);
     }
     lambdaMeta.setLambdaMethod(method);
     lambdaMeta.buildMethodMeta(method);

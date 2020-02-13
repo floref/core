@@ -32,9 +32,19 @@ import static org.floref.core.config.FlowConfiguration.commonThreadPoolMaxSize;
 public class CommandRunner {
 
   // For the moment one pool for all except
-  public static ExecutorService executorService = new ThreadPoolExecutor(0,
-      FlowConfiguration.getIntConfig(commonThreadPoolMaxSize),60L, TimeUnit.SECONDS, new SynchronousQueue<Runnable>());
-  public static ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(1);
+//  public static ExecutorService executorService = new ThreadPoolExecutor(0,
+//      FlowConfiguration.getIntConfig(commonThreadPoolMaxSize),60L, TimeUnit.SECONDS, new SynchronousQueue<Runnable>());
+  public static ExecutorService executorService = new ThreadPoolExecutor(FlowConfiguration.getIntConfig(commonThreadPoolMaxSize),
+      Integer.MAX_VALUE, 60L, TimeUnit.SECONDS, new SynchronousQueue<Runnable>(), (Runnable r) -> {
+    Thread t = new Thread(r);
+    t.setDaemon(true); // So that it does not block the application from exiting.
+    return t;
+  });
+  public static ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(1, (Runnable r) -> {
+    Thread t = new Thread(r);
+    t.setDaemon(true);
+    return t;
+  });
 
   public static ExecutorService getExecutorService() {
     return executorService;

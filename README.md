@@ -1,42 +1,56 @@
 # Floref
-Floref comes from **flo**w **ref**erence. A flow reference is a method reference towards a flow starting method.
-Floref is a Java workflow engine based on functional programming with the **method reference as the building
- block**: <br>
-- Method references are used to refer/run existing code or other workflows. 
-- Define a flow using fluent instructions that act on method references. <br>
-- Runtime flow import/update (from a database/UI) can be done by using method references and their aliases. 
+Floref is a Java workflow engine based on functional programming with **method references** used to: <br>
+- refer existing code or other workflows. 
+- define a flow with fluent instructions acting on method references. <br>
+- import/update a flow at **runtime** (from a database/UI). <br>
 
-# What is a flow
-*A workflow consists of an orchestrated and repeatable pattern of activity ... (wikipedia)*.
-Translated into code: **a workflow is a method from an interface** also called the flow start method since it uniquely 
-identifies the flow.<br>
-Floref fluent API is used to create a flow definition in 3 steps.
+Method references can target interfaces while the actual implementation can be **injected** at runtime.<br>
+With the use of aliases a flow can be defined using **simpler business notations** instead of method references.<br>
+The flows can be exported (JSON) and updated at **runtime**. <br>
+Easy to get started, powerful features and extensible.
 
-# The 3 steps
+# Flow reference
+A FLOw REFerence is an **interface method** also called the flow start method since it uniquely identifies the flow.<br>
+Floref fluent API is used to define what that flow reference will do when called.<br>
+Any user interface method can be a workflow.<br>
+![](doc/images/interface%20workflow.png)
+
+# Flow definition
 ```java
-// 1. Create interface with flow start methods with any name/parameters/return.
-public interface JobFlows {
-  Job processJob(Job job); // flow 1
-  void recordJob(...);     // flow 2
+public class Example {
+  // 1. Interface containing flows.
+  interface MyFlows {
+    String runJob(Job job);  // flow 1
+    void recordJob(Job job); // flow 2
+  }
+  static class Job { }
+  static class FooService {
+    public Job validate(Job job) { return job; }
+    public String sendTo3rdParty(Job job) {return "done";}
+    public void record(Job job) {System.out.println("recorded");}
+  }
+  public static void main(String args[]) {
+    // 2. Define and build.
+    FooService service = new FooService();
+    MyFlows flows = Flows.from(MyFlows::runJob)
+        .to(service::validate)     // run instance::method or class::method (instance injectable)
+        .fork(MyFlows::recordJob)  // run in separate thread, do not wait for result
+        .retry(service::sendTo3rdParty).times(10).delay(1000)  // retry external calls
+        .build();
+
+    // Another flow used in the one above.
+    Flows.from(MyFlows::recordJob)
+        .to(service::record)
+        .build();
+
+    // 3. Run.
+    String status = flows.runJob(new Job());
+    System.out.println(status); // done
+  }
 }
-
-// 2. Define and build.
-JobFlows flows = Flows.from(JobFlows::processJob)
-  .to(anyBean::validateData)    // call any object
-  .fork(JobFlows::recordJob)    // call another flow
-  .retry(anyBean::method).times(10).delay(1000)  // retry
-  .build();
-
-// 3. Run.
-flows.processJob(job);
 ```
-Step 1 (and step 3) are **unrestricted developer API**. Any interface method can become a flow. <br>
-Step 2 is the flow definition and builds and returns the workflow instance from that definition.<br>
-Step 3: **no external APIs needed to run a flow**, just call the flow start method. <br>
-Defining and running a flow can not be simpler than this. <br>
-A flow is uniquely identified by an **interface method** which is natural since its implementation varies over time. <br>
-The `Flows` class used to define and build flows is generic so the returned flow instance is same type as the interface from the `from` command. <br>
-The definition has both compile and runtime checks in place so that the defined flow is **always valid**. 
+Only step 2 needs Floref in order to create a define a flow implementation and return a flow instance that can be used 
+to run the flows.
 
 ## Instructions
 Remember there is only one building block - the method reference (aka flow step) but in order to construct 
@@ -50,14 +64,14 @@ The commands cover many **method integration patterns**, with detailed info in t
 - [`when/otherwise`](README.md#when-otherwise) conditional execution of grouped steps.
 - [`parallel`](README.md#parallel) executes multiple flow steps in parallel (on the same input) and then continues.
 - [`forEach`](README.md#forEach) execute grouped steps for each element from a `Collection` input.
-- [`reversible`](README.md#reversible) executes revert actions in reverse order starting from the last failed step, useful when having many 3rd party integrations to reconcile with.
+- [`compensable`](README.md#compensable) executes revert actions in reverse order starting from the last failed step, useful when having many 3rd party integrations to reconcile with.
 - [`retry`](README.md#retry) retry able flow step, usage example: retrying REST calls if server is busy.
 - `circuitBreaker` for short circuiting when the number of failures reaches a certain threshold.
 - etc, see [Instructions reference](README.md#Instructions-reference)<br>
 
 **NOTE**: 
 1. The instructions are **context constrained** depending on the current and parent instruction. For example you will not be able to 
-code compile an `otherwise` before a `when`, commands specifics like `.delay`, `aggregator`, `revertBy`, etc will be 
+code compile an `otherwise` before a `when`, commands specifics like `.delay`, `aggregator`, `reversion`, etc will be 
 accessible only if the previous/containing command within the fluent API was a corresponding command.
 This is a unique feature of Floref that makes sure the flows are valid early on at compile time.
 ![missplaced](doc/images/Missplaced.png)
@@ -466,7 +480,7 @@ public class ForEachCommandTest {
 }
 ```
 
-## `reversible`
+## `compensable`
 Emulates the concept of [compensating transactions](https://en.wikipedia.org/wiki/Compensating_transaction). <br>
 When there is a need to call multiple external systems (integrations) and one of them could fail it would be normal to 
 do a revert in all the systems that were called until that moment and in **reverse order**. For example if systems A, B, C
@@ -501,9 +515,9 @@ public class CompensateTest {
   public void test() {
     CompensateTest test = new CompensateTest();
     Flows flows = from(Flows::testRevert)
-        .reversible()
-          .to(test::plus).revertBy(test::minus)
-          .to(test::multiply).revertBy(test::divide)
+        .compensable()
+          .to(test::plus).reversion(test::minus)
+          .to(test::multiply).reversion(test::divide)
           .to(test::failHere)
         .build();
 

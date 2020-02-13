@@ -101,10 +101,10 @@ public class MethodReferenceCommand extends ChildCommand {
     return lambdaMeta;
   }
 
-  public void setRevertBy(MethodReference methodReference) {
+  public void setReversion(MethodReference methodReference) {
     revertBy = new MethodReferenceCommand(methodReference);
   }
-  public void setRevertBy(LambdaMeta lambdaMeta) {
+  public void setReversion(LambdaMeta lambdaMeta) {
     revertBy = new MethodReferenceCommand(lambdaMeta);
   }
 

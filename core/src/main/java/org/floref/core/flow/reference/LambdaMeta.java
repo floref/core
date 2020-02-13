@@ -16,14 +16,16 @@
 
 package org.floref.core.flow.reference;
 
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
-import java.lang.reflect.Parameter;
-import java.util.ArrayList;
-import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.floref.core.flow.annotation.FlowVar;
+
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import java.lang.reflect.Parameter;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Lambda meta util.
@@ -189,6 +191,9 @@ public class LambdaMeta<T> {
     if (lambdaActualMethod != method) {
       LOG.debug("Loading new method " + method.getDeclaringClass().getSimpleName() + "#" + method.getName());
       lambdaActualMethod = method;
+      if (!Modifier.isPublic(method.getModifiers())) {
+        method.setAccessible(true);
+      }
       buildMethodMeta(method);
     }
   }

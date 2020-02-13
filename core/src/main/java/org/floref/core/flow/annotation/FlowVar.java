@@ -16,11 +16,7 @@
 
 package org.floref.core.flow.annotation;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.lang.annotation.*;
 
 /**
  * Used to store and retrieve flow session variables. A flow session is valid for the entire time the flow is run
@@ -51,6 +47,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD, ElementType.PARAMETER})
 @Documented
+@Inherited
 public @interface FlowVar {
 
   /**

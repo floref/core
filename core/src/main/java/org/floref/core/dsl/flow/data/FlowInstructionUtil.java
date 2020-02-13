@@ -61,10 +61,10 @@ public class FlowInstructionUtil {
     return (I)flowCommand;
   }
 
-  public static <I> I setRevertBy(FlowInstruction flowCommand, MethodReference methodReference) {
+  public static <I> I setReversion(FlowInstruction flowCommand, MethodReference methodReference) {
     MethodReferenceCommand methodReferenceCommand = getInstructionCommand(flowCommand, ToCommand.class,
         "'.revertBy' currently supported only for '.to'");
-    methodReferenceCommand.setRevertBy(methodReference);
+    methodReferenceCommand.setReversion(methodReference);
     return (I)flowCommand;
   }
 

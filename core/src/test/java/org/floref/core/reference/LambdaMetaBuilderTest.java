@@ -19,12 +19,11 @@ package org.floref.core.reference;
 import org.floref.core.dsl.TestFlows;
 import org.floref.core.dsl.flow.Flows;
 import org.floref.core.dsl.flow.impex.Aliases;
-import org.floref.core.exception.FlowDefinitionException;
 import org.floref.core.flow.reference.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class LambdaMetaBuilderTest {
 
@@ -75,46 +74,46 @@ public class LambdaMetaBuilderTest {
   }
 
 
-  @Test
-  public void testTargetIsPublic() {
-    try {
-      TestFlows testFlows = Flows.from(TestFlows::length)
-          .to(new Pojo()::length)
-          .build();
-    } catch (FlowDefinitionException e) {
-      assertTrue(e.getMessage().contains("Class org.floref.core.reference.LambdaMetaBuilderTest.Pojo should be public"));
-      return;
-    }
-    fail();
-  }
-
-  interface FlowTest {
-    int length(String s);
-  }
-  @Test
-  public void testTargetIsPublic2() {
-    try {
-      FlowTest testFlows = Flows.from(FlowTest::length)
-          .to(new Pojo()::length)
-          .build();
-    } catch (FlowDefinitionException e) {
-      assertTrue(e.getMessage().contains("Class org.floref.core.reference.LambdaMetaBuilderTest.FlowTest should be public."));
-      return;
-    }
-    fail();
-  }
-
-  @Test
-  public void testTargetMethodIsPublic() {
-    try {
-      TestFlows testFlows = Flows.from(TestFlows::length)
-          .to(new PublicPojoNonPublicMethod()::length)
-          .build();
-    } catch (FlowDefinitionException e) {
-      assertTrue(e.getMessage().contains("Method org.floref.core.reference.LambdaMetaBuilderTest.PublicPojoNonPublicMethod::length should be public."));
-      return;
-    }
-    fail();
-  }
+//  @Test
+//  public void testTargetIsPublic() {
+//    try {
+//      TestFlows testFlows = Flows.from(TestFlows::length)
+//          .to(new Pojo()::length)
+//          .build();
+//    } catch (FlowDefinitionException e) {
+//      assertTrue(e.getMessage().contains("Class org.floref.core.reference.LambdaMetaBuilderTest.Pojo should be public"));
+//      return;
+//    }
+//    fail();
+//  }
+//
+//  interface FlowTest {
+//    int length(String s);
+//  }
+//  @Test
+//  public void testTargetIsPublic2() {
+//    try {
+//      FlowTest testFlows = Flows.from(FlowTest::length)
+//          .to(new Pojo()::length)
+//          .build();
+//    } catch (FlowDefinitionException e) {
+//      assertTrue(e.getMessage().contains("Class org.floref.core.reference.LambdaMetaBuilderTest.FlowTest should be public."));
+//      return;
+//    }
+//    fail();
+//  }
+//
+//  @Test
+//  public void testTargetMethodIsPublic() {
+//    try {
+//      TestFlows testFlows = Flows.from(TestFlows::length)
+//          .to(new PublicPojoNonPublicMethod()::length)
+//          .build();
+//    } catch (FlowDefinitionException e) {
+//      assertTrue(e.getMessage().contains("Method org.floref.core.reference.LambdaMetaBuilderTest.PublicPojoNonPublicMethod::length should be public."));
+//      return;
+//    }
+//    fail();
+//  }
 
 }

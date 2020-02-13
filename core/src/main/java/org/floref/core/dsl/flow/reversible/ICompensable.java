@@ -18,17 +18,17 @@ package org.floref.core.dsl.flow.reversible;
 
 import org.floref.core.dsl.flow.data.FlowInstruction;
 
-import static org.floref.core.dsl.command.FlowCommandBuilders.REVERSIBLE;
+import static org.floref.core.dsl.command.FlowCommandBuilders.COMPENSABLE;
 
 /**
  * Contains .reversible command and configuration methods.
  *
  * @author Cristian Donoiu
  */
-public interface IReversible<P, F> extends FlowInstruction {
+public interface ICompensable<P, F> extends FlowInstruction {
 
-  default Reversible<P, F> reversible() {
-    getFlowData().addParent(REVERSIBLE);
-    return new Reversible(this);
+  default Compensable<P, F> compensable() {
+    getFlowData().addParent(COMPENSABLE);
+    return new Compensable(this);
   }
 }

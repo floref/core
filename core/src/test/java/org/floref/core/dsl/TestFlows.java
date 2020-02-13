@@ -16,9 +16,10 @@
 
 package org.floref.core.dsl;
 
+import org.floref.core.flow.annotation.FlowVar;
+
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Future;
-import org.floref.core.flow.annotation.FlowVar;
 
 public interface TestFlows {
 
@@ -49,7 +50,7 @@ public interface TestFlows {
 
     int processSeven(int one, String two, int three, int four, int six, int seven);
 
-    int reverse(int i);
+    int intFunction(int i);
 
 
 

@@ -23,8 +23,8 @@ import org.floref.core.dsl.flow.data.FlowInstructionImpl;
 import org.floref.core.dsl.flow.foreach.IForEach;
 import org.floref.core.dsl.flow.parallel.IParallel;
 import org.floref.core.dsl.flow.retry.IRetry;
-import org.floref.core.dsl.flow.reversible.IReversible;
-import org.floref.core.dsl.flow.reversible.Reversible;
+import org.floref.core.dsl.flow.reversible.Compensable;
+import org.floref.core.dsl.flow.reversible.ICompensable;
 
 /**
  * Otherwise entry point.
@@ -36,8 +36,8 @@ public class Otherwise<P, F> extends FlowInstructionImpl<F> implements
     IWhen<Otherwise<P, F>, F>,   // No .otherwise after an otherwise, there must be an .end first.
     IParallel<Otherwise<P, F>, F>,
     IForEach<Otherwise<P, F>, F>,
-    IReversible<Otherwise<P, F>, F>,
-    IRetry<Reversible<P, F>, F> {
+    ICompensable<Otherwise<P, F>, F>,
+    IRetry<Compensable<P, F>, F> {
 
   protected FlowInstruction parent;
 

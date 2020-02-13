@@ -27,8 +27,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.floref.core.dsl.flow.Flows.from;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 public class FlowVarTest {
 
@@ -67,5 +66,67 @@ public class FlowVarTest {
       return;
     }
     fail();
+  }
+
+  public static class TestParent {
+    @FlowVar("i")
+    public int f(int i) {
+      return i + 1;
+    }
+    public int addTen(int i) {
+      return i+9;
+    }
+    public int f2( @FlowVar("i") int i) {
+      return i;
+    }
+  }
+  public static class TestChild extends TestParent {
+  }
+  @Test
+  public void testAnnotationInheritanceSubclass() {
+    TestChild test = new TestChild();
+
+    TestFlows flows = from(TestFlows::intFunction)
+        .to(test::f)
+        .to(test::addTen)
+        .to(test::f2)
+        .build();
+
+    assertEquals(3, flows.intFunction(2));
+  }
+
+
+  public static class TestSubclass {
+    public int f(int i) {
+      return i + 1;
+    }
+    public int addTen(int i) {
+      return i+10;
+    }
+    public int f2(int i) {
+      return i;
+    }
+  }
+  @Test
+  public void testAnnotationOnAnonymousSubclass() {
+    TestSubclass test = new TestSubclass() {
+      @Override
+      @FlowVar("j")
+      public int f(int i) {
+        return i+3;
+      }
+      @Override
+      public int f2(@FlowVar("j") int i) {
+        return i+1;
+      }
+    };
+
+    TestFlows flows = from(TestFlows::intFunction)
+        .to(test::f)
+        .to(test::addTen)
+        .to(test::f2)
+        .build();
+
+    assertEquals(6, flows.intFunction(2));
   }
 }

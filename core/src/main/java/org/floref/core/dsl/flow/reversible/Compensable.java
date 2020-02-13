@@ -28,8 +28,8 @@ import org.floref.core.dsl.flow.retry.IRetry;
 import org.floref.core.dsl.flow.when.IWhen;
 import org.floref.core.flow.reference.*;
 
-import static org.floref.core.dsl.command.FlowCommandBuilders.REVERSIBLE;
-import static org.floref.core.dsl.flow.data.FlowInstructionUtil.setRevertBy;
+import static org.floref.core.dsl.command.FlowCommandBuilders.COMPENSABLE;
+import static org.floref.core.dsl.flow.data.FlowInstructionUtil.setReversion;
 
 /**
  * Workflow base class allowing the call of any other flow commands.
@@ -39,18 +39,18 @@ import static org.floref.core.dsl.flow.data.FlowInstructionUtil.setRevertBy;
  * @author Cristian Donoiu
  */
 //public class Reversible<P, F> extends Base<P, F> {
-public class Reversible<P, F> extends FlowInstructionImpl<F> implements
-    To<Reversible<P, F>>,
-    IFork<Reversible<P, F>>,
-    IWhen<Reversible<P, F>, F>,
-    IParallel<Reversible<P, F>, F>,
-    IForEach<Reversible<P, F>, F>,
-    IReversible<Reversible<P, F>, F>,
-    IRetry<Reversible<P, F>, F> {
+public class Compensable<P, F> extends FlowInstructionImpl<F> implements
+    To<Compensable<P, F>>,
+    IFork<Compensable<P, F>>,
+    IWhen<Compensable<P, F>, F>,
+    IParallel<Compensable<P, F>, F>,
+    IForEach<Compensable<P, F>, F>,
+    ICompensable<Compensable<P, F>, F>,
+    IRetry<Compensable<P, F>, F> {
 
   protected FlowInstruction parent;
   
-  public Reversible(FlowInstruction src) {
+  public Compensable(FlowInstruction src) {
     copyData(src);
     parent = src;
   }
@@ -64,48 +64,48 @@ public class Reversible<P, F> extends FlowInstructionImpl<F> implements
     return (P)parent;
   }
 
-  public Reversible<P, F> revertBy(ParamVoidConsumerVoidSupplier consumer) {
-    setRevertBy(this, consumer);
+  public Compensable<P, F> reversion(ParamVoidConsumerVoidSupplier consumer) {
+    setReversion(this, consumer);
     return this;
   }
 
-  public <T> Reversible<P, F> revertBy(ParamSupplier<T> consumer) {
-    setRevertBy(this, consumer);
+  public <T> Compensable<P, F> reversion(ParamSupplier<T> consumer) {
+    setReversion(this, consumer);
     return this;
   }
 
-  public <T> Reversible<P, F> revertBy(ParamConsumer<T> consumer) {
-    setRevertBy(this, consumer);
+  public <T> Compensable<P, F> reversion(ParamConsumer<T> consumer) {
+    setReversion(this, consumer);
     return this;
   }
 
-  public <T, U> Reversible<P, F> revertBy(ParamBiConsumer<T, U> consumer) {
-    setRevertBy(this, consumer);
+  public <T, U> Compensable<P, F> reversion(ParamBiConsumer<T, U> consumer) {
+    setReversion(this, consumer);
     return this;
   }
 
-  public <T, U, V> Reversible<P, F> revertBy(ParamTriConsumer<T, U, V> consumer) {
-    setRevertBy(this, consumer);
+  public <T, U, V> Compensable<P, F> reversion(ParamTriConsumer<T, U, V> consumer) {
+    setReversion(this, consumer);
     return this;
   }
 
-  public <T, U, V, X> Reversible<P, F> revertBy(ParamTetraConsumer<T, U, V, X> consumer) {
-    setRevertBy(this, consumer);
+  public <T, U, V, X> Compensable<P, F> reversion(ParamTetraConsumer<T, U, V, X> consumer) {
+    setReversion(this, consumer);
     return this;
   }
 
-  public <T, U, V, X, Y> Reversible<P, F> revertBy(ParamPentaConsumer<T, U, V, X, Y> consumer) {
-    setRevertBy(this, consumer);
+  public <T, U, V, X, Y> Compensable<P, F> reversion(ParamPentaConsumer<T, U, V, X, Y> consumer) {
+    setReversion(this, consumer);
     return this;
   }
 
-  public <T, U, V, X, Y, Z> Reversible<P, F> revertBy(ParamHexaConsumer<T, U, V, X, Y, Z> consumer) {
-    getFlowData().addChild(REVERSIBLE, consumer);
+  public <T, U, V, X, Y, Z> Compensable<P, F> reversion(ParamHexaConsumer<T, U, V, X, Y, Z> consumer) {
+    getFlowData().addChild(COMPENSABLE, consumer);
     return this;
   }
 
-  public <T, U, V, X, Y, Z, A> Reversible<P, F> revertBy(ParamHeptaConsumer<T, U, V, X, Y, Z, A> consumer) {
-    getFlowData().addChild(REVERSIBLE, consumer);
+  public <T, U, V, X, Y, Z, A> Compensable<P, F> reversion(ParamHeptaConsumer<T, U, V, X, Y, Z, A> consumer) {
+    getFlowData().addChild(COMPENSABLE, consumer);
     return this;
   }
   

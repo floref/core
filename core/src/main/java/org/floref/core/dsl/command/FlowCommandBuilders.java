@@ -38,7 +38,7 @@ public class FlowCommandBuilders {
   public static final String OTHERWISE = "otherwise";
   public static final String PARALLEL = "parallel";
   public static final String FOR_EACH = "forEach";
-  public static final String REVERSIBLE = "reversible";
+  public static final String COMPENSABLE = "reversible";
   public static final String RETRY = "retry";
   public static Map<String, FlowCommandBuilder> builders = new HashMap<>();
 
@@ -70,7 +70,7 @@ public class FlowCommandBuilders {
     addBuilder(OTHERWISE, params -> new OtherwiseCommand());
     addBuilder(PARALLEL, params -> new ParallelCommand());
     addBuilder(FOR_EACH, params -> new ForEachCommand());
-    addBuilder(REVERSIBLE, params -> new ReversibleCommand());
+    addBuilder(COMPENSABLE, params -> new ReversibleCommand());
     addBuilder(RETRY, params -> {
       if (params[0] instanceof MethodReference) {
         return new RetryCommand((MethodReference) params[0]);

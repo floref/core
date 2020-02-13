@@ -52,9 +52,9 @@ public class ReversibleTest {
   public void test() {
     ReversibleTest test = new ReversibleTest();
     Flows flows = from(Flows::testRevert)
-        .reversible()
-          .to(test::plus).revertBy(test::minus)
-          .to(test::multiply).revertBy(test::divide)
+        .compensable()
+          .to(test::plus).reversion(test::minus)
+          .to(test::multiply).reversion(test::divide)
           .to(test::failHere)
         .build();
 

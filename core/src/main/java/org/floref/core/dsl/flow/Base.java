@@ -22,7 +22,7 @@ import org.floref.core.dsl.flow.data.FlowInstructionImpl;
 import org.floref.core.dsl.flow.foreach.IForEach;
 import org.floref.core.dsl.flow.parallel.IParallel;
 import org.floref.core.dsl.flow.retry.IRetry;
-import org.floref.core.dsl.flow.reversible.IReversible;
+import org.floref.core.dsl.flow.reversible.ICompensable;
 import org.floref.core.dsl.flow.when.IWhen;
 import org.floref.core.exception.FlowDefinitionException;
 
@@ -46,7 +46,7 @@ public class Base<P, F> extends FlowInstructionImpl<F> implements
     IWhen<Base<P, F>, F>,
     IParallel<Base<P, F>, F>,
     IForEach<Base<P, F>, F>,
-    IReversible<Base<P, F>, F>,
+    ICompensable<Base<P, F>, F>,
     IRetry<Base<P, F>, F> {
 
   public Base() {

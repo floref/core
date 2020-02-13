@@ -23,6 +23,6 @@ import java.io.Serializable;
  * @author Cristian Donoiu
  */
 @FunctionalInterface
-public interface ParamVoidConsumerVoidSupplier<T> extends MethodReference<T>, Serializable {
+public interface ParamVoidConsumerVoidSupplier extends MethodReference<Void>, Serializable {
   void run() throws Exception;
 }
