@@ -27,14 +27,16 @@ public class RetryTest {
 
   public void callRestClient(StringBuilder context) throws TimeoutException {
     context.append(".");
-    if ( context.length() < 3) {
+    if (context.length() < 3) {
       throw new TimeoutException("Server busy, try again later");
     }
     context.append("done");
   }
+
   public interface RetryFlow {
-     void retryCall(StringBuilder context);
+    void retryCall(StringBuilder context);
   }
+
   @Test
   public void test() {
     RetryTest test = new RetryTest();

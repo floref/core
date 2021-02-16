@@ -59,6 +59,7 @@ public class MethodReferenceCommand extends ChildCommand {
   public MethodReferenceCommand() {
 
   }
+
   public MethodReferenceCommand(MethodReference methodReference) {
     lambdaMeta = LambdaMetaBuilder.getLambdaMeta(methodReference);
   }
@@ -78,23 +79,27 @@ public class MethodReferenceCommand extends ChildCommand {
   }
 
   public MethodReferenceCommand(ParamVoidConsumerVoidSupplier consumer) {
-    this((MethodReference)consumer);
+    this((MethodReference) consumer);
   }
+
   public <T> MethodReferenceCommand(ParamSupplier<T> consumer) {
-    this((MethodReference)consumer);
+    this((MethodReference) consumer);
   }
+
   public <T> MethodReferenceCommand(ParamConsumer<T> consumer) {
-    this((MethodReference)consumer);
+    this((MethodReference) consumer);
   }
+
   public <T, U> MethodReferenceCommand(ParamBiConsumer<T, U> consumer) {
-    this((MethodReference)consumer);
+    this((MethodReference) consumer);
   }
+
   public <T, U, V> MethodReferenceCommand(ParamTriConsumer<T, U, V> consumer) {
-    this((MethodReference)consumer);
+    this((MethodReference) consumer);
   }
 
   public <T, U, V, X> MethodReferenceCommand(ParamTetraConsumer<T, U, V, X> consumer) {
-    this((MethodReference)consumer);
+    this((MethodReference) consumer);
   }
 
   public LambdaMeta getLambdaMeta() {
@@ -104,6 +109,7 @@ public class MethodReferenceCommand extends ChildCommand {
   public void setRevertBy(MethodReference methodReference) {
     revertBy = new MethodReferenceCommand(methodReference);
   }
+
   public void setRevertBy(LambdaMeta lambdaMeta) {
     revertBy = new MethodReferenceCommand(lambdaMeta);
   }
@@ -123,7 +129,7 @@ public class MethodReferenceCommand extends ChildCommand {
   public String toString() {
     String string = lambdaMeta.getLambdaClass().getSimpleName() + "::" + lambdaMeta.getLambdaMethod().getName();
     if (lambdaMeta.getTarget() != null) {
-      string = string.substring(0,1).toLowerCase() + string.substring(1);
+      string = string.substring(0, 1).toLowerCase() + string.substring(1);
     }
     return getKeyword() + "(" + string + ")";
   }
@@ -140,7 +146,9 @@ public class MethodReferenceCommand extends ChildCommand {
       alias = getLambdaMeta().getMethodReferenceAsString();
     }
     flowStep.setRef(alias);
-  };
+  }
+
+  ;
 
   /**
    * Runs a method reference.
@@ -162,7 +170,7 @@ public class MethodReferenceCommand extends ChildCommand {
       String methodName = method.getName();
       Object target = lambdaMeta.getTarget();  // The target may be a flow or a non flow.
 
-      Object flow = Flows.getFlow(lambdaClass);
+      Object flow = Flows.get(lambdaClass);
 
       if (target != null) {
         MetricsHelper.beforeMethod(new MethodRefMetrics.Builder(id).params(args).isFlow(flow != null).build());
@@ -287,10 +295,10 @@ public class MethodReferenceCommand extends ChildCommand {
       LOG.error(cause.getMessage(), cause);
 
       if (cause instanceof Exception) {
-        commandContext.setException((Exception)cause);
+        commandContext.setException((Exception) cause);
         MetricsHelper
             .afterMethod(new MethodRefMetrics.Builder(id).params(args).exception((Exception) cause).build());
-        throw (Exception)cause;
+        throw (Exception) cause;
       } else {
         commandContext.setException(exception);
         throw exception; // Contains Error.

@@ -52,10 +52,12 @@ public class FlowObjectMethods {
     List<Object> objects = new ArrayList();
     String prefix;
     int current = 1;
+
     public ToStringNumbering(Class clazz) {
       String className = clazz.getSimpleName();
       prefix = Character.toLowerCase(className.charAt(0)) + className.substring(1);
     }
+
     public String getName(Object target) {
       String name = null;
       int index = objects.indexOf(target);
@@ -70,6 +72,7 @@ public class FlowObjectMethods {
       return name;
     }
   }
+
   public static class ToStringIndexes {
     Map<String, ToStringNumbering> map = new HashMap<>();
 
@@ -83,6 +86,7 @@ public class FlowObjectMethods {
       return toStringNumbering.getName(target);
     }
   }
+
   public static String toString(FlowInstanceData flowInstanceData) {
     ToStringIndexes toStringIndexes = new ToStringIndexes();
 

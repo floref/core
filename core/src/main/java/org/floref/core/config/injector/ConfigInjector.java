@@ -24,5 +24,6 @@ package org.floref.core.config.injector;
  */
 public interface ConfigInjector {
   String getProperty(String key);
+
   String getProperty(String key, String defaultValue);
 }

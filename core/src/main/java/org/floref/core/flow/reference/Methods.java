@@ -16,12 +16,11 @@
 
 package org.floref.core.flow.reference;
 
+import org.floref.core.exception.FlowDefinitionException;
+
 import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import org.floref.core.exception.FlowDefinitionException;
 
 /**
  * Methods utils.
@@ -29,6 +28,7 @@ import org.floref.core.exception.FlowDefinitionException;
 public class Methods {
 
   private static final Map<Class<?>, Class<?>> primitiveWrapperMap = new HashMap<Class<?>, Class<?>>();
+
   static {
     primitiveWrapperMap.put(Boolean.TYPE, Boolean.class);
     primitiveWrapperMap.put(Byte.TYPE, Byte.class);

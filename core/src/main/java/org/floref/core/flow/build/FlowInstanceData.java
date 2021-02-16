@@ -80,6 +80,7 @@ public class FlowInstanceData {
   public boolean contains(String flowDefinitionId) {
     return flowDefinitions.containsKey(flowDefinitionId);
   }
+
   public void update(FlowDefinition flowDefinition) {
     flowDefinitions.put(flowDefinition.getId(), flowDefinition);
     stringValue = null;
@@ -95,7 +96,7 @@ public class FlowInstanceData {
 
   public String getStringValue() {
 //    if (stringValue == null) {
-      stringValue = FlowObjectMethods.toString(this); // cache it.
+    stringValue = FlowObjectMethods.toString(this); // cache it.
 //    }
     return stringValue;
   }

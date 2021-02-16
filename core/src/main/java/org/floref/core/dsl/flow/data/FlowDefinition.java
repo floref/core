@@ -34,8 +34,8 @@ import java.util.List;
  * The flow definition contains all the instructions for running a flow. The flow definition id is
  * <code>FlowClass::method</code>
  * Thus two different definitions can exist for the same method but their id will be the same.
- * @param <T> is the flow class.
  *
+ * @param <T> is the flow class.
  * @author Cristian Donoiu
  */
 public class FlowDefinition<T> {
@@ -47,6 +47,7 @@ public class FlowDefinition<T> {
   public FlowDefinition(MethodReference<T> flowRef) {
     init(flowRef);
   }
+
   public FlowDefinition(LambdaMeta lambdaMeta) {
     init(lambdaMeta);
   }
@@ -55,6 +56,7 @@ public class FlowDefinition<T> {
   public FlowDefinition() {
 
   }
+
   protected void init(MethodReference<T> flowRef) {
     flowReference = LambdaMetaBuilder.getLambdaMeta(flowRef);
     if (flowReference.getTarget() != null) {
@@ -62,6 +64,7 @@ public class FlowDefinition<T> {
     }
     id = getIdFromFlowRef(flowReference.getLambdaMethod());
   }
+
   protected void init(LambdaMeta lambdaMeta) {
     flowReference = lambdaMeta;
     if (flowReference.getTarget() != null) {
@@ -89,6 +92,7 @@ public class FlowDefinition<T> {
   public Class<T> getFlowClass() {
     return getFlowReference().getLambdaClass();
   }
+
   public String getFlowClassCanonicalName() {
     return getFlowClass().getCanonicalName();
   }
@@ -107,11 +111,12 @@ public class FlowDefinition<T> {
   private void navigate(FlowCommand flowCommand, List<FlowCommand> flowCommands) {
     flowCommands.add(flowCommand);
     if (flowCommand instanceof ParentCommand) {
-      for (FlowCommand child : ((ParentCommand)flowCommand).getChildren()) {
+      for (FlowCommand child : ((ParentCommand) flowCommand).getChildren()) {
         navigate(child, flowCommands);
       }
     }
   }
+
   /**
    * @return the list of commands by navigating thru all.
    */
@@ -119,5 +124,9 @@ public class FlowDefinition<T> {
     List<FlowCommand> flowCommands = new ArrayList<>();
     navigate(startCommand, flowCommands);
     return flowCommands;
+  }
+
+  public void setId(String id) {
+    this.id = id;
   }
 }

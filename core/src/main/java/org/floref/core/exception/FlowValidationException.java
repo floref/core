@@ -18,11 +18,11 @@ package org.floref.core.exception;
 
 public class FlowValidationException extends FlowDefinitionException {
 
-    public FlowValidationException(String message, Throwable cause) {
-        super(message, cause);
-    }
+  public FlowValidationException(String message, Throwable cause) {
+    super(message, cause);
+  }
 
-    public FlowValidationException(String message) {
-        super(message);
-    }
+  public FlowValidationException(String message) {
+    super(message);
+  }
 }

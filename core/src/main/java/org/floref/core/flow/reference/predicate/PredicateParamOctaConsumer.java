@@ -16,11 +16,13 @@
 
 package org.floref.core.flow.reference.predicate;
 
-import java.io.Serializable;
 import org.floref.core.flow.reference.MethodReference;
+
+import java.io.Serializable;
 
 /**
  * Catches 7 params and class.
+ *
  * @author Cristian Donoiu
  */
 public interface PredicateParamOctaConsumer<T, U, V, X, Y, Z, A, B> extends MethodReference<T>, Serializable {

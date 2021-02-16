@@ -47,6 +47,7 @@ public class FlowSession {
 
   /**
    * Used when copying a session to another thread.
+   *
    * @param session
    */
   public static void set(Map session) {
@@ -60,6 +61,7 @@ public class FlowSession {
   public static Object get(String key) {
     return get().get(key);
   }
+
   public static <T> T get(String key, Class<T> clazz) {
     return (T) get().get(key);
   }

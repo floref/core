@@ -16,11 +16,6 @@
 
 package org.floref.core.flow.build;
 
-import static org.floref.core.dsl.flow.Flows.from;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
 import org.floref.core.dsl.TestFlows;
 import org.floref.core.dsl.TestService;
 import org.floref.core.dsl.flow.Flows;
@@ -28,12 +23,17 @@ import org.floref.core.exception.FlowDefinitionException;
 import org.junit.Before;
 import org.junit.Test;
 
+import static org.floref.core.dsl.flow.Flows.from;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+
 public class FlowInstanceBuilderTest {
 
   @Before
   public void before() {
     Flows.deleteAll();
   }
+
   @Test
   public void testFlowAlreadyDefined() {
     TestService merger = new TestService();

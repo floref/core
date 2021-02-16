@@ -23,15 +23,15 @@ package org.floref.core.exception;
  */
 public class FlowDefinitionException extends FlorefException {
 
-    public FlowDefinitionException(Throwable cause) {
-        super(cause);
-    }
+  public FlowDefinitionException(Throwable cause) {
+    super(cause);
+  }
 
-    public FlowDefinitionException(String message, Throwable cause) {
-        super(message, cause);
-    }
+  public FlowDefinitionException(String message, Throwable cause) {
+    super(message, cause);
+  }
 
-    public FlowDefinitionException(String message) {
-        super(message);
-    }
+  public FlowDefinitionException(String message) {
+    super(message);
+  }
 }

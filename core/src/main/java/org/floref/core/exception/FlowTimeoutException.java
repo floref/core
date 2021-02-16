@@ -23,7 +23,7 @@ package org.floref.core.exception;
  */
 public class FlowTimeoutException extends FlorefException {
 
-    public FlowTimeoutException(String message) {
-        super(message);
-    }
+  public FlowTimeoutException(String message) {
+    super(message);
+  }
 }

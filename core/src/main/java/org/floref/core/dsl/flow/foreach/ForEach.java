@@ -16,7 +16,7 @@
 
 package org.floref.core.dsl.flow.foreach;
 
-import org.floref.core.dsl.flow.Base;
+import org.floref.core.dsl.flow.BaseInstructionImpl;
 import org.floref.core.dsl.flow.data.FlowInstruction;
 import org.floref.core.dsl.flow.group.GroupUtil;
 
@@ -25,7 +25,7 @@ import org.floref.core.dsl.flow.group.GroupUtil;
  *
  * @author Cristian Donoiu
  */
-public class ForEach<P, F> extends Base<P, F> implements GroupUtil<ForEach<P, F>> {
+public class ForEach<P, F> extends BaseInstructionImpl<P, F> implements GroupUtil<ForEach<P, F>> {
 
   public ForEach(FlowInstruction flowInstruction) {
     copyData(flowInstruction);

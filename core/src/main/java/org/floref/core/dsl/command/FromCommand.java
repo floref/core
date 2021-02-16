@@ -38,6 +38,7 @@ public class FromCommand extends ParentCommand {
   public FromCommand(MethodReference methodReference) {
     this.methodReferenceCommand = new MethodReferenceCommand(FROM, methodReference);
   }
+
   public FromCommand(LambdaMeta lambdaMeta) {
     this.methodReferenceCommand = new MethodReferenceCommand(FROM, lambdaMeta);
   }
@@ -59,7 +60,7 @@ public class FromCommand extends ParentCommand {
 
   @Override
   public void run(CommandContext commandContext) throws Exception {
-     runChildren(commandContext);
+    runChildren(commandContext);
   }
 
   @Override

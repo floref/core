@@ -16,13 +16,15 @@
 
 package org.floref.core.flow.reference.predicate;
 
-import java.io.Serializable;
 import org.floref.core.flow.reference.MethodReference;
+
+import java.io.Serializable;
 
 /**
  * Catches 3 params method references with instance target or 2 params with class target.
+ *
  * @author Cristian Donoiu
  */
 public interface PredicateParamTriConsumer<T, U, V> extends MethodReference<T>, Serializable {
-    boolean accept(T t, U u, V v) throws Exception;
+  boolean accept(T t, U u, V v) throws Exception;
 }

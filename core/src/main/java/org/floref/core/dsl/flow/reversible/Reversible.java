@@ -49,7 +49,7 @@ public class Reversible<P, F> extends FlowInstructionImpl<F> implements
     IRetry<Reversible<P, F>, F> {
 
   protected FlowInstruction parent;
-  
+
   public Reversible(FlowInstruction src) {
     copyData(src);
     parent = src;
@@ -61,7 +61,7 @@ public class Reversible<P, F> extends FlowInstructionImpl<F> implements
     getFlowData().setCurrentParent(grandParent);
 
     getFlowData().setInstruction(parent);
-    return (P)parent;
+    return (P) parent;
   }
 
   public Reversible<P, F> revertBy(ParamVoidConsumerVoidSupplier consumer) {
@@ -108,5 +108,5 @@ public class Reversible<P, F> extends FlowInstructionImpl<F> implements
     getFlowData().addChild(REVERSIBLE, consumer);
     return this;
   }
-  
+
 }

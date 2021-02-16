@@ -45,6 +45,7 @@ public class FlowCommandBuilders {
   static {
     init();
   }
+
   static void init() {
     addBuilder(TO, params -> {
       if (params[0] instanceof MethodReference) {

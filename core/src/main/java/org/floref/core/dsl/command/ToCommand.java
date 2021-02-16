@@ -35,9 +35,11 @@ public class ToCommand extends MethodReferenceCommand {
   public ToCommand(MethodReference toMethodReference) {
     super(toMethodReference);
   }
+
   public ToCommand(LambdaMeta lambdaMeta) {
     super(lambdaMeta);
   }
+
   @Override
   public String getKeyword() {
     return TO;

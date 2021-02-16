@@ -16,16 +16,16 @@
 
 package org.floref.core.dsl.command;
 
-import static org.floref.core.dsl.TestService.SLEEP;
-import static org.floref.core.dsl.flow.Flows.from;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
 import org.floref.core.dsl.TestFlows;
 import org.floref.core.dsl.TestService;
 import org.floref.core.dsl.flow.Flows;
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.floref.core.dsl.TestService.SLEEP;
+import static org.floref.core.dsl.flow.Flows.from;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class ForkTest {
 
@@ -33,6 +33,7 @@ public class ForkTest {
   public void before() {
     Flows.deleteAll();
   }
+
   @Test
   public void testWithoutAsync() {
     TestService testService = new TestService();

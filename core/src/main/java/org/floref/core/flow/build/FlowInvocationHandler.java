@@ -37,10 +37,10 @@ import java.util.concurrent.Future;
 
 /**
  * For each interface for which we define flows there will be a single proxy(start instance) doing the magic.
- *
+ * <p>
  * JDK dynamic proxying infrastructure (from the java.lang.reflect package) that is only capable of creating proxies for interfaces.
  * https://spring.io/blog/2007/07/19/debunking-myths-proxies-impact-performance/
- *
+ * <p>
  * Repackage cglib inside so that no conflicts will arise. See: https://stackoverflow.com/questions/41478307/whats-the-difference-between-spring-cglib-and-cglib
  * https://docs.spring.io/spring/docs/2.5.x/reference/aop.html#aop-proxying
  * http://stackoverflow.com/questions/10664182/what-is-the-difference-between-jdk-dynamic-proxy-and-cglib
@@ -121,21 +121,20 @@ public class FlowInvocationHandler implements InvocationHandler {
     if (flowDefinition == null) {
       // If an Object method is called.
       if (method.getDeclaringClass() == Object.class) {
-          if (method.getName().equals(FlowObjectMethods.EQUALS)) {
-            return FlowObjectMethods.equals(proxy, args[0]);
-          } else if (method.getName().equals(FlowObjectMethods.HASHCODE)) {
-            return FlowObjectMethods.hashCode(proxy);
-          } else if (method.getName().equals(FlowObjectMethods.TOSTRING)) {
-            return flowInstanceData.getStringValue();
-          } else {
-            throw new FlowDefinitionException("Flow not yet defined for " + flowDefinitionId);
-          }
+        if (method.getName().equals(FlowObjectMethods.EQUALS)) {
+          return FlowObjectMethods.equals(proxy, args[0]);
+        } else if (method.getName().equals(FlowObjectMethods.HASHCODE)) {
+          return FlowObjectMethods.hashCode(proxy);
+        } else if (method.getName().equals(FlowObjectMethods.TOSTRING)) {
+          return flowInstanceData.getStringValue();
+        } else {
+          throw new FlowDefinitionException("Flow not yet defined for " + flowDefinitionId);
+        }
       }
       throw new FlowDefinitionException("Flow not yet defined for " + flowDefinitionId);
     }
 
     LambdaMeta lambdaMeta = flowDefinition.getFlowReference();
-
 
 
     if (Future.class == lambdaMeta.getReturnType()) {

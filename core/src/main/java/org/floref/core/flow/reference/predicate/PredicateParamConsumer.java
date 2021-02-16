@@ -16,12 +16,14 @@
 
 package org.floref.core.flow.reference.predicate;
 
-import java.io.Serializable;
 import org.floref.core.flow.reference.MethodReference;
+
+import java.io.Serializable;
 
 /**
  * A serializable lambda can provide access to SerializedLambda class.
  * Used to handle method reference referred by instance with one parameter OR referred by class with no parameters(the only parameter will be the class name)
+ *
  * @author Cristian Donoiu
  */
 public interface PredicateParamConsumer<T> extends MethodReference<T>, Serializable {

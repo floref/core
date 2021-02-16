@@ -41,9 +41,11 @@ public class ForEachTest {
   public String s1(String s) {
     return s + "1";
   }
+
   public String s2(String s) {
     return s + "2";
   }
+
   public String s3(String s) {
     if (s.equalsIgnoreCase("b12")) {
       throw new RuntimeException("s3");
@@ -51,15 +53,17 @@ public class ForEachTest {
       return s;
     }
   }
+
   public String joinByDot(String s) {
     return s + "." + s.toUpperCase();
   }
+
   public List getListSplitByDot(String s) {
     return Arrays.asList(s.split("\\."));
   }
 
   public String processResults(List<String> results) {
-    return results.stream().collect(Collectors.joining( "," ));
+    return results.stream().collect(Collectors.joining(","));
   }
 
   public String processResults3(List<List<String>> results) {
@@ -79,6 +83,7 @@ public class ForEachTest {
 
   public interface TestFlows {
     String start(Collection<String> s);
+
     List<String> start2(Collection<String> s);
   }
 
@@ -109,20 +114,20 @@ public class ForEachTest {
 
     TestFlows flows = from(TestFlows::start2)
         .forEach()
-          .to(test::s1)
-          .to(test::s2)
+        .to(test::s1)
+        .to(test::s2)
         .end()
         .to(test::processResults2)
         .forEach()
-          .to(test::s1)
-          .to(test::s2)
+        .to(test::s1)
+        .to(test::s2)
         .end()
         .to(test::processResults2)
         .build();
 
     List<String> result = flows.start2(Arrays.asList("a", "b"));
-    assertTrue(result.equals(Arrays.asList(new String[] {"a1212", "b1212"}))
-        || result.equals(Arrays.asList(new String[] {"b1212", "a1212"})));
+    assertTrue(result.equals(Arrays.asList(new String[]{"a1212", "b1212"}))
+        || result.equals(Arrays.asList(new String[]{"b1212", "a1212"})));
   }
 
   @Test
@@ -131,12 +136,12 @@ public class ForEachTest {
 
     TestFlows flows = from(TestFlows::start)
         .forEach()
-          .to(test::joinByDot)
-          .to(test::getListSplitByDot)
-          .forEach()
-            .to(test::s1)
-            .to(test::s2)
-          .end()
+        .to(test::joinByDot)
+        .to(test::getListSplitByDot)
+        .forEach()
+        .to(test::s1)
+        .to(test::s2)
+        .end()
         .end()
         .to(test::processResults3)
         .build();
@@ -151,8 +156,8 @@ public class ForEachTest {
 
     TestFlows flows = from(TestFlows::start)
         .forEach().aggregator(test::aggregator)
-          .to(test::s1)
-          .to(test::s2)
+        .to(test::s1)
+        .to(test::s2)
         .end()
         .to(test::processResults)
         .build();
@@ -167,9 +172,9 @@ public class ForEachTest {
 
     TestFlows flows = from(TestFlows::start)
         .forEach()
-          .to(test::s1)
-          .to(test::s2)
-          .to(test::s3)
+        .to(test::s1)
+        .to(test::s2)
+        .to(test::s3)
         .end()
         .to(test::processResults)
         .build();

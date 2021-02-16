@@ -26,6 +26,7 @@ public interface MetricsConsumer {
 
   /**
    * Called before a flow is run.
+   *
    * @param metrics
    */
   void beforeFlow(FlowMetrics metrics);

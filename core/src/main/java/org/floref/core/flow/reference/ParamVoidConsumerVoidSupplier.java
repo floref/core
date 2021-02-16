@@ -20,6 +20,7 @@ import java.io.Serializable;
 
 /**
  * Catches methods that return void and have no parameters.
+ *
  * @author Cristian Donoiu
  */
 @FunctionalInterface

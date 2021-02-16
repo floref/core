@@ -16,11 +16,10 @@
 
 /**
  * Flow run metrics aggregates different run data.
+ *
  * @author Cristian Donoiu
  */
 package org.floref.core.config.consumer;
-
-import org.floref.core.config.consumer.FlowMetrics.Builder;
 
 public class MethodRefMetrics {
   protected String methodReference;
@@ -86,6 +85,7 @@ public class MethodRefMetrics {
 
   public static class Builder {
     MethodRefMetrics metrics = new MethodRefMetrics();
+
     public Builder(String reference) {
       metrics.setMethodReference(reference);
     }
@@ -98,14 +98,17 @@ public class MethodRefMetrics {
       metrics.success = success;
       return this;
     }
+
     public Builder result(Object result) {
       metrics.result = result;
       return this;
     }
+
     public Builder params(Object[] params) {
       metrics.params = params;
       return this;
     }
+
     public Builder exception(Exception exception) {
       metrics.exception = exception;
       if (exception != null) {
@@ -113,6 +116,7 @@ public class MethodRefMetrics {
       }
       return this;
     }
+
     public Builder isFlow(boolean isFlow) {
       metrics.isFlow = isFlow;
       return this;

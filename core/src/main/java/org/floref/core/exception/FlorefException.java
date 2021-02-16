@@ -23,15 +23,15 @@ package org.floref.core.exception;
  */
 public class FlorefException extends RuntimeException {
 
-    public FlorefException(Throwable cause) {
-        super(cause);
-    }
+  public FlorefException(Throwable cause) {
+    super(cause);
+  }
 
-    public FlorefException(String message, Throwable cause) {
-        super(message, cause);
-    }
+  public FlorefException(String message, Throwable cause) {
+    super(message, cause);
+  }
 
-    public FlorefException(String message) {
-        super(message);
-    }
+  public FlorefException(String message) {
+    super(message);
+  }
 }

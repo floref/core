@@ -42,6 +42,7 @@ public class FlowsTest {
   public void after() {
     assertTrue(FlowSession.isEmpty());
   }
+
   @Test
   public void testExceptionWhenFlowsIsNotAClass() {
     try {
@@ -57,7 +58,7 @@ public class FlowsTest {
   @Test
   public void testExceptionWhenFlowsIsNotInterface() {
     try {
-      from(String::length); // You can only define a flow from an interface class.
+      from(String::length).build(); // You can only define a flow from an interface class.
     } catch (FlowDefinitionException e) {
       e.printStackTrace();
       assertTrue(e.getMessage().contains("java.lang.String needs to be a Java interface in order to define flows from it."));
@@ -135,7 +136,7 @@ public class FlowsTest {
     String s = flows.mergeTwoStrings("a", "b");
     assertEquals("ab", s);
 
-    TestFlows flows2 = Flows.getFlow(TestFlows.class);
+    TestFlows flows2 = Flows.get(TestFlows.class);
     assertEquals(flows, flows2);
     assertEquals("12", flows2.mergeTwoStrings("1", "2"));
 
@@ -183,11 +184,6 @@ public class FlowsTest {
         .fork(merger::length)
         .build();
 
-//    FlowRef
-//        .start()
-//        .from(TestFlows::processOneStringReturnString)
-//        .to(merger::takeTwoStringsReturnInt)
-//        .build();
     flows.toString();
   }
 
@@ -198,13 +194,9 @@ public class FlowsTest {
         .to(merger::mergeTwoStrings)
         .build();
 
-//    FlowRef
-//        .start()
-//        .from(TestFlows::processOneStringReturnString)
-//        .to(merger::takeTwoStringsReturnInt)
-//        .build();
     flows.mergeTwoStrings("a", "b");
   }
+
 //  @Test
 //  public void testMethodRefOnClassCreatesNewInstanceForThatClassOrAutowiresBeanOfThatClass() {
 //

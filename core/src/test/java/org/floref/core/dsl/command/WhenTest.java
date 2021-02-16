@@ -30,24 +30,31 @@ public class WhenTest {
   public boolean lengthMultipleOf2(String s) {
     return s.length() % 2 == 0;
   }
+
   public boolean lengthMultipleOf4(String s) {
     return s.length() % 4 == 0;
   }
+
   public boolean lengthMultipleOf8(String s) {
     return s.length() % 8 == 0;
   }
+
   public boolean lengthMultipleOf3(String s) {
     return s.length() % 3 == 0;
   }
+
   public static boolean evenLengthStatic(String s) {
     return s.length() % 2 == 0;
   }
+
   public boolean evenLengthTwoStrings(String s1, String s2) {
     return (s1 + s2).length() % 2 == 0;
   }
+
   public boolean getBoolean() {
     return true;
   }
+
   public String doubleString(String s) {
     return s + s;
   }
@@ -63,9 +70,9 @@ public class WhenTest {
 
     TestFlows flows = from(TestFlows::processOneStringReturnString)
         .when(this::lengthMultipleOf2)
-          .to(testService::toUpperCase)
+        .to(testService::toUpperCase)
         .otherwise()
-          .to(testService::toLowerCase)
+        .to(testService::toLowerCase)
         .end()
         .build();
 
@@ -97,10 +104,10 @@ public class WhenTest {
 
     TestFlows flows = from(TestFlows::processOneStringReturnString)
         .when(this::lengthMultipleOf2)
-          .when(this::lengthMultipleOf4)
-            .to(testService::toUpperCase)
-          .otherwise()
-            .to(testService::toLowerCase)
+        .when(this::lengthMultipleOf4)
+        .to(testService::toUpperCase)
+        .otherwise()
+        .to(testService::toLowerCase)
         .build();
 
     String s = flows.processOneStringReturnString("ab");
@@ -113,11 +120,11 @@ public class WhenTest {
 
     TestFlows flows = from(TestFlows::processOneStringReturnString)
         .when(this::lengthMultipleOf2)
-          .when(this::lengthMultipleOf4)
-            .to(testService::toUpperCase)
-          .otherwise()
-            .to(testService::toLowerCase)
-          .end()
+        .when(this::lengthMultipleOf4)
+        .to(testService::toUpperCase)
+        .otherwise()
+        .to(testService::toLowerCase)
+        .end()
         .end()
         .build();
 
@@ -131,11 +138,11 @@ public class WhenTest {
 
     TestFlows flows = from(TestFlows::processOneStringReturnString)
         .when(this::lengthMultipleOf2)
-          .when(this::lengthMultipleOf4)
-            .to(testService::toUpperCase)
-          .end()
+        .when(this::lengthMultipleOf4)
+        .to(testService::toUpperCase)
+        .end()
         .otherwise()
-          .to(testService::toLowerCase)
+        .to(testService::toLowerCase)
         .build();
 
     String s = flows.processOneStringReturnString("ABC");
@@ -148,11 +155,11 @@ public class WhenTest {
 
     TestFlows flows = from(TestFlows::processOneStringReturnString)
         .when(this::lengthMultipleOf2)
-          .when(this::lengthMultipleOf4)
-            .when(this::lengthMultipleOf8)
-              .to(testService::toUpperCase)
-            .end()
-          .end()
+        .when(this::lengthMultipleOf4)
+        .when(this::lengthMultipleOf8)
+        .to(testService::toUpperCase)
+        .end()
+        .end()
         .end()
         .build();
 
@@ -166,12 +173,12 @@ public class WhenTest {
 
     TestFlows flows = from(TestFlows::processOneStringReturnString)
         .when(this::lengthMultipleOf2)
-          .when(this::lengthMultipleOf4)
-            .to(testService::toUpperCase)
-          .end()
+        .when(this::lengthMultipleOf4)
+        .to(testService::toUpperCase)
+        .end()
         .end()
         .when(this::lengthMultipleOf8)
-          .to(testService::doubleString)
+        .to(testService::doubleString)
         .build();
 
     String s = flows.processOneStringReturnString("abcdefgh");
@@ -184,12 +191,12 @@ public class WhenTest {
 
     TestFlows flows = from(TestFlows::processOneStringReturnString)
         .when(this::lengthMultipleOf2)
-          .when(this::lengthMultipleOf4)
-            .to(testService::toUpperCase)
-          .end()
+        .when(this::lengthMultipleOf4)
+        .to(testService::toUpperCase)
+        .end()
         .end()
         .when(this::lengthMultipleOf3)
-          .to(testService::doubleString)
+        .to(testService::doubleString)
         .build();
 
     String s = flows.processOneStringReturnString("abc");
@@ -202,13 +209,13 @@ public class WhenTest {
 
     TestFlows flows = from(TestFlows::processOneStringReturnString)
         .when(this::lengthMultipleOf2)
-          .to(testService::toUpperCase)
-          .when(this::lengthMultipleOf3)
-            .to(testService::doubleString)
-          .otherwise()
-            .to(testService::tripleString)
-          .end()
-          .to(testService::inverseString)
+        .to(testService::toUpperCase)
+        .when(this::lengthMultipleOf3)
+        .to(testService::doubleString)
+        .otherwise()
+        .to(testService::tripleString)
+        .end()
+        .to(testService::inverseString)
         .build();
 
     String s = flows.processOneStringReturnString("abcd");
@@ -221,13 +228,13 @@ public class WhenTest {
 
     TestFlows flows = from(TestFlows::processOneStringReturnString)
         .when(this::lengthMultipleOf2)
-          .to(testService::toUpperCase)
-          .when(this::lengthMultipleOf3)
-            .to(testService::doubleString)
-          .otherwise()
-            .to(testService::tripleString)
-          .end()
-          .to(testService::inverseString)
+        .to(testService::toUpperCase)
+        .when(this::lengthMultipleOf3)
+        .to(testService::doubleString)
+        .otherwise()
+        .to(testService::tripleString)
+        .end()
+        .to(testService::inverseString)
         .build();
 
     String s = flows.processOneStringReturnString("abcd");
@@ -240,12 +247,12 @@ public class WhenTest {
 
     TestFlows flows = from(TestFlows::processOneStringReturnString)
         .when(this::lengthMultipleOf2)
-          .to(testService::toUpperCase)
-          .when(this::lengthMultipleOf3)
-            .to(testService::doubleString)
-          .otherwise()
-            .to(testService::tripleString)
-          .end()
+        .to(testService::toUpperCase)
+        .when(this::lengthMultipleOf3)
+        .to(testService::doubleString)
+        .otherwise()
+        .to(testService::tripleString)
+        .end()
         .end()
         .to(testService::inverseString)
         .build();

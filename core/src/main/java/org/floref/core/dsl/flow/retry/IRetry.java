@@ -57,11 +57,11 @@ public interface IRetry<P, F> extends FlowInstruction {
     return new Retry(this, consumer);
   }
 
-  default <T, U, V, X, Y, Z, A> Retry<P, F> retry(ParamHeptaConsumer<T, U, V, X, Y, Z, A> consumer){
+  default <T, U, V, X, Y, Z, A> Retry<P, F> retry(ParamHeptaConsumer<T, U, V, X, Y, Z, A> consumer) {
     return new Retry(this, consumer);
   }
 
   default <T> Retry<P, F> retry(LambdaMeta<T> lambdaMeta) {
-    return (Retry<P, F>)getFlowData().addChild(RETRY, lambdaMeta);
+    return (Retry<P, F>) getFlowData().addChild(RETRY, lambdaMeta);
   }
 }

@@ -31,13 +31,17 @@ public interface FlowCommand {
 
   default String getId() {
     return getKeyword();
-  };
+  }
+
+  ;
+
   /**
    * @return true if the command is a grouping command.
    */
   default boolean isParent() {  ///////////////////////////// AICI DE SCOS SI TESTAT CU INSTANCE OF GROUPCOMMAND
     return false;
   }
+
   /**
    * @return the currentParent command that groups/contains this command.
    */
@@ -53,7 +57,9 @@ public interface FlowCommand {
 
   default String getKeyword() {
     return getClass().getSimpleName();
-  };
+  }
+
+  ;
 
   default void definitionExport(FlowStep flowStep) {
   }

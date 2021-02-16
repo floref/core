@@ -16,13 +16,19 @@
 
 package org.floref.core.dsl.flow.data;
 
+import org.floref.core.flow.build.FlowInstanceBuilder;
 import org.floref.core.flow.registry.FlowRegistry;
 
-public class FlowInstructionImpl<FLOW_CLASS> implements FlowInstruction {
+public class FlowInstructionImpl<FC> implements FlowInstruction {
   FlowData flowData = new FlowData();
 
-  public FLOW_CLASS build() {
-    FLOW_CLASS flow = (FLOW_CLASS) FlowRegistry.getFlow(flowData.getFlowDefinition());
+  /**
+   * Build the flow by creating the flow instance.
+   * @return
+   */
+  public FC build() {
+    FlowInstanceBuilder.build(flowData.getFlowDefinition(), false);
+    FC flow = (FC) FlowRegistry.getFlow(flowData.getFlowDefinition());
     return flow;
   }
 

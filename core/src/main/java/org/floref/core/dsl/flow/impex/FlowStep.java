@@ -37,11 +37,12 @@ public class FlowStep {
   public FlowStep() {
     map = new LinkedHashMap();
   }
+
   public FlowStep(Object map) {
     if (map == null || !(map instanceof Map)) {
       throw new FlowDefinitionException("Elements inside 'steps' must be non null JSON objects");
     }
-    this.map = (Map)map;
+    this.map = (Map) map;
   }
 
   public Map getMap() {
@@ -53,7 +54,7 @@ public class FlowStep {
   }
 
   private <T> T get(String key, Class<T> clazz) {
-    T value = (T)map.get(key);
+    T value = (T) map.get(key);
     if (value != null && !(clazz.isAssignableFrom(value.getClass()))) {
       throw new FlowDefinitionException("For key " + key + " expecting a " + clazz.getSimpleName() + " but found a " + value.getClass().getSimpleName());
     }
@@ -75,6 +76,7 @@ public class FlowStep {
   public String getRef() {
     return get("ref", String.class);
   }
+
   public LambdaMeta getRefLambdaMeta() {
     String ref = getRef();
     LambdaMeta lambdaMeta = null;
@@ -108,6 +110,7 @@ public class FlowStep {
   public void setTimeout(long timeout) {
     set("timeout", timeout);
   }
+
   public Boolean getStopOnException() {
     return get("stopOnException", Boolean.class);
   }
@@ -139,6 +142,7 @@ public class FlowStep {
       stepList.add(step.map);
     }
   }
+
   public void addStep(FlowStep flowStep) {
     List stepList = get("steps", List.class);
     if (stepList == null) {

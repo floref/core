@@ -33,6 +33,7 @@ public class FlowValidator {
    * Can also test for type transmission when there are no annotations for the parameter of method 2 to be of same type
    * or subclass as the parameter of method 1.
    * Can also test if the last returned result is null or an instance of the flow reference return type.
+   *
    * @param flowDefinition
    * @param flowCommand
    * @param previous
@@ -76,8 +77,10 @@ public class FlowValidator {
 //      }
 //    }
   }
+
   /**
    * Performs a continuity validation, including on branches.
+   *
    * @param flowDefinition
    */
   public static void validate(FlowDefinition flowDefinition) {

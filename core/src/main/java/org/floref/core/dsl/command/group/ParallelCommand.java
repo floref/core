@@ -16,16 +16,15 @@
 
 package org.floref.core.dsl.command.group;
 
-import static org.floref.core.dsl.command.FlowCommandBuilders.PARALLEL;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.floref.core.dsl.command.FlowCommand;
 import org.floref.core.flow.run.CommandContext;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.floref.core.dsl.command.FlowCommandBuilders.PARALLEL;
 
 /**
  * .parallel

@@ -16,16 +16,14 @@
 
 package org.floref.core.dsl.command;
 
-import static org.floref.core.dsl.flow.Flows.from;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
 import org.floref.core.dsl.TestFlows;
 import org.floref.core.dsl.flow.Flows;
 import org.floref.core.exception.FlowDefinitionException;
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.floref.core.dsl.flow.Flows.from;
+import static org.junit.Assert.*;
 
 public class ToTest {
 
@@ -39,6 +37,7 @@ public class ToTest {
     public int length(String a) {
       return a.length();
     }
+
     public String fromInt(int value) {
       return Integer.toString(value);
     }

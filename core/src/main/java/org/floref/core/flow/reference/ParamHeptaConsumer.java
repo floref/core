@@ -20,6 +20,7 @@ import java.io.Serializable;
 
 /**
  * Catches 7 params method references with instance target or 6 params with class target.
+ *
  * @author Cristian Donoiu
  */
 public interface ParamHeptaConsumer<T, U, V, X, Y, Z, A> extends MethodReference<T>, Serializable {

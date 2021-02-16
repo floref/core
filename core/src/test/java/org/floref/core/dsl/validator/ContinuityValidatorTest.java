@@ -16,8 +16,6 @@
 
 package org.floref.core.dsl.validator;
 
-import static junit.framework.Assert.assertEquals;
-
 public class ContinuityValidatorTest {
 
 
@@ -29,6 +27,7 @@ public class ContinuityValidatorTest {
 
   public interface TestFlows {
     int length(String s);
+
     int length2(String s);
   }
 

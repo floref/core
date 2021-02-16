@@ -16,11 +16,8 @@
 
 package org.floref.core.dsl.command;
 
-import static org.floref.core.dsl.flow.Flows.from;
-import static org.junit.Assert.assertEquals;
-
-import org.floref.core.config.injector.BeanInjector;
 import org.floref.core.config.FlowConfiguration;
+import org.floref.core.config.injector.BeanInjector;
 import org.floref.core.dsl.TestFlows;
 import org.floref.core.dsl.TestInterface;
 import org.floref.core.dsl.TestInterfaceImpl;
@@ -29,6 +26,9 @@ import org.floref.core.dsl.flow.Flows;
 import org.floref.core.exception.MissingBeanFlowException;
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.floref.core.dsl.flow.Flows.from;
+import static org.junit.Assert.assertEquals;
 
 public class MethodReferenceCommandTest {
 

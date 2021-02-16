@@ -29,6 +29,7 @@ public interface BeanInjector {
 
   /**
    * Gets a bean to be used(injected) when the flow is run.
+   *
    * @param beanClass is an interface or class for which a bean in required to be injected.
    * @return the corresponding bean implementing the provided class/interface. Return null if there is no bean
    * available.
@@ -39,6 +40,7 @@ public interface BeanInjector {
    * Determine the target class of the given bean instance which might be an JDK proxy, a cglib proxy, etc.
    * This is needed because when a flow using beans is exported the beans might be proxy instances but the exported
    * flow definition needs to refer the bean target class in method references.
+   *
    * @param candidate
    * @return
    */

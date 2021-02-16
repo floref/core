@@ -45,6 +45,7 @@ public class AliasesTest {
 
   public interface TestFlows {
     int length(String s);
+
     int size(String s);
   }
 
@@ -59,18 +60,18 @@ public class AliasesTest {
     });
 
     TestFlows testFlows = Flows.from(TestFlows::length).alias("flow1")
-            .to(TestBean::length).alias("pojoLength")
-            .build();
+        .to(TestBean::length).alias("pojoLength")
+        .build();
 
     Flows.from(TestFlows::size).alias("flow2")
-            .to(TestFlows::length)
-            .build();
+        .to(TestFlows::length)
+        .build();
 
     String json = Flows.export(TestFlows.class);
     assertEquals(3, testFlows.length("abc"));
 
     assertEquals("{\"flows\":[{\"type\":\"from\",\"ref\":\"flow1\",\"steps\":[{\"type\":\"to\",\"ref\":\"pojoLength\"}]},{\"type\":\"from\",\"ref\":\"flow2\",\"steps\":[{\"type\":\"to\",\"ref\":\"flow1\"}]}],\"aliases\":{\"flow1\":\"org.floref.core.flow.alias.AliasesTest.TestFlows::length\",\"flow2\":\"org.floref.core.flow.alias.AliasesTest.TestFlows::size\",\"pojoLength\":\"org.floref.core.flow.alias.AliasesTest.TestBean::length\"}}",
-            json);
+        json);
   }
 
   @Before
@@ -101,13 +102,13 @@ public class AliasesTest {
     });
 
     TestFlows testFlows = Flows.from(TestFlows::length)
-            .to(testBean::length).alias("pojoLength")
-            .build();
+        .to(testBean::length).alias("pojoLength")
+        .build();
 
     //Aliases.alias("pojoLength", pojo::length);
 
     assertEquals("{\"flows\":[{\"type\":\"from\",\"ref\":\"org.floref.core.flow.alias.AliasesTest.TestFlows::length\",\"steps\":[{\"type\":\"to\",\"ref\":\"pojoLength\"}]}],\"aliases\":{\"pojoLength\":\"org.floref.core.flow.alias.AliasesTest.TestBean::length\"}}",
-            Flows.export(TestFlows.class));
+        Flows.export(TestFlows.class));
   }
 
   @Test
@@ -145,15 +146,14 @@ public class AliasesTest {
   }
 
 
-
   @Test
   public void testExceptionWhenNotABeanInjectorBean() {
     TestBean testBean = new TestBean();
 
     try {
       Flows.from(TestFlows::length).alias("flow1")
-            .to(testBean::length).alias("pojoLength")
-            .build();
+          .to(testBean::length).alias("pojoLength")
+          .build();
     } catch (FlowDefinitionException e) {
       assertTrue(e.getMessage().contains("Unsupported alias \"pojoLength\" for org.floref.core.flow.alias.AliasesTest.TestBean::length because class instance could not be retrieved via BeanInjector"));
       return;

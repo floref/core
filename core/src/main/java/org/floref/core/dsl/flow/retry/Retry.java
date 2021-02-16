@@ -18,7 +18,7 @@ package org.floref.core.dsl.flow.retry;
 
 
 import org.floref.core.dsl.command.RetryCommand;
-import org.floref.core.dsl.flow.Base;
+import org.floref.core.dsl.flow.BaseInstructionImpl;
 import org.floref.core.dsl.flow.data.FlowInstruction;
 import org.floref.core.flow.reference.MethodReference;
 
@@ -30,9 +30,9 @@ import static org.floref.core.dsl.flow.data.FlowInstructionUtil.getInstructionCo
  *
  * @author Cristian Donoiu
  */
-public class Retry<P, F> extends Base<P, F> {
+public class Retry<P, F> extends BaseInstructionImpl<P, F> {
 
-//  protected FlowInstruction parent;
+  //  protected FlowInstruction parent;
   public Retry(FlowInstruction src, MethodReference consumer) {
     copyData(src);
     getFlowData().addChild(RETRY, consumer);

@@ -18,8 +18,8 @@ package org.floref.core.exception;
 
 public class MissingBeanFlowException extends FlowDefinitionException {
 
-    public MissingBeanFlowException(Class target) {
-        super("Could not retrieve bean or flow implementation for " + target.getCanonicalName());
-    }
+  public MissingBeanFlowException(Class target) {
+    super("Could not retrieve bean or flow implementation for " + target.getCanonicalName());
+  }
 
 }

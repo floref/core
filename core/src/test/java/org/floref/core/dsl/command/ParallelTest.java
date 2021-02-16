@@ -16,16 +16,17 @@
 
 package org.floref.core.dsl.command;
 
-import static org.floref.core.dsl.flow.Flows.from;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
-import java.util.List;
-import java.util.stream.Collectors;
 import org.floref.core.dsl.flow.Flows;
 import org.floref.core.exception.FlowTimeoutException;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static org.floref.core.dsl.flow.Flows.from;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 public class ParallelTest {
 
@@ -36,9 +37,11 @@ public class ParallelTest {
   public String s1(String s) {
     return s + "1";
   }
+
   public String s2(String s) {
     return s + "2";
   }
+
   public String s2VeryLong(String s) {
     try {
       Thread.currentThread().sleep(Long.MAX_VALUE);
@@ -47,11 +50,13 @@ public class ParallelTest {
     }
     return s + "2";
   }
+
   public String s3(String s) {
     throw new RuntimeException("s3");
   }
+
   public String processResults(List<String> results) {
-    return results.stream().collect(Collectors.joining( "," ));
+    return results.stream().collect(Collectors.joining(","));
   }
 
   public interface TestFlows {
@@ -69,8 +74,8 @@ public class ParallelTest {
 
     TestFlows flows = from(TestFlows::start)
         .parallel()  // Optionally custom .aggregator(test::aggregator)
-          .to(test::s1)
-          .to(test::s2)
+        .to(test::s1)
+        .to(test::s2)
         .end()
         .to(test::processResults)
         .build();
@@ -85,8 +90,8 @@ public class ParallelTest {
 
     TestFlows flows = from(TestFlows::start)
         .parallel().aggregator(test::aggregator)
-          .to(test::s1)
-          .to(test::s2)
+        .to(test::s1)
+        .to(test::s2)
         .end()
         .to(test::processResults)
         .build();
@@ -101,9 +106,9 @@ public class ParallelTest {
 
     TestFlows flows = from(TestFlows::start)
         .parallel()
-          .to(test::s1)
-          .to(test::s2)
-          .to(test::s3)
+        .to(test::s1)
+        .to(test::s2)
+        .to(test::s3)
         .end()
         .to(test::processResults)
         .build();
@@ -118,8 +123,8 @@ public class ParallelTest {
 
     TestFlows flows = from(TestFlows::start)
         .parallel().aggregator(test::aggregator).stopOnException()
-          .to(test::s1)
-          .to(test::s3)
+        .to(test::s1)
+        .to(test::s3)
         .end()
         .to(test::processResults)
         .build();
@@ -139,9 +144,9 @@ public class ParallelTest {
 
     TestFlows flows = from(TestFlows::start)
         .parallel() //.stopOnException()
-          .to(test::s1)
-          .to(test::s2)
-          .to(test::s3)
+        .to(test::s1)
+        .to(test::s2)
+        .to(test::s3)
         .end()
         .to(test::processResults)
         .build();
@@ -156,8 +161,8 @@ public class ParallelTest {
 
     TestFlows flows = from(TestFlows::start)
         .parallel().aggregator(test::aggregator).timeout(500)
-          .to(test::s1)
-          .to(test::s2VeryLong)
+        .to(test::s1)
+        .to(test::s2VeryLong)
         .end()
         .to(test::processResults)
         .build();

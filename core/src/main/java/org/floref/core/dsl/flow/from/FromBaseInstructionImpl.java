@@ -14,17 +14,15 @@
  * limitations under the License.
  */
 
-package org.floref.core.dsl.flow;
+package org.floref.core.dsl.flow.from;
 
-import org.floref.core.dsl.command.group.ParentCommand;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.floref.core.dsl.flow.BaseInstructionImpl;
 import org.floref.core.dsl.flow.data.FlowInstruction;
-import org.floref.core.dsl.flow.data.FlowInstructionImpl;
-import org.floref.core.dsl.flow.foreach.IForEach;
-import org.floref.core.dsl.flow.parallel.IParallel;
-import org.floref.core.dsl.flow.retry.IRetry;
-import org.floref.core.dsl.flow.reversible.IReversible;
-import org.floref.core.dsl.flow.when.IWhen;
 import org.floref.core.exception.FlowDefinitionException;
+
+import static org.floref.core.flow.registry.FlowRegistry.COLON;
 
 /**
  * Workflow base class allowing the call of any other flow commands.
@@ -40,30 +38,37 @@ import org.floref.core.exception.FlowDefinitionException;
  *
  * @author Cristian Donoiu
  */
-public class Base<P, F> extends FlowInstructionImpl<F> implements
-    To<Base<P, F>>,
-    IFork<Base<P, F>>,
-    IWhen<Base<P, F>, F>,
-    IParallel<Base<P, F>, F>,
-    IForEach<Base<P, F>, F>,
-    IReversible<Base<P, F>, F>,
-    IRetry<Base<P, F>, F> {
+public class FromBaseInstructionImpl<P, F> extends BaseInstructionImpl<P, F> {
+  private static final Log LOG = LogFactory.getLog(From.class);
 
-  public Base() {
+  public FromBaseInstructionImpl() {
   }
-  public Base(FlowInstruction instruction) {
+
+  public FromBaseInstructionImpl(FlowInstruction instruction) {
     copyData(instruction);
   }
 
-  public P end() {
-    // End the last group.
-    ParentCommand grandParent = getFlowData().getCurrentParent().getParent();
-    if (grandParent == null) {
-      throw new FlowDefinitionException("'.end()' is missing a block command to be ended. Too many '.end()'.");
+  public FromBaseInstructionImpl<P, F> id(String id) {
+    String[] parts = id.split(COLON);
+    if (parts.length != 2) {
+      throw new FlowDefinitionException("Invalid flow id '" + id + "'. The flow ID needs to contain exactly 1 colon like" +
+            " 'flowGroup:flowName'");
     }
-    getFlowData().setCurrentParent(grandParent);
-
-    getFlowData().setInstruction(this);
-    return (P)this;
+    getFlowData().getFlowDefinition().setId(id);
+    LOG.debug("new flow id: " + id);
+    return this;
   }
+
+  //  public P end() {
+  //    // End the last group.
+  //    ParentCommand grandParent = getFlowData().getCurrentParent().getParent();
+  //    if (grandParent == null) {
+  //      throw new FlowDefinitionException("'.end()' is missing a block command to be ended. Too many '.end()'.");
+  //    }
+  //    getFlowData().setCurrentParent(grandParent);
+  //
+  //    getFlowData().setInstruction(this);
+  //    return (P) this;
+  //  }
+
 }

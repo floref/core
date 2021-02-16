@@ -32,6 +32,7 @@ public interface GroupUtil<I> extends FlowInstruction {
   default I stopOnException() {
     return FlowInstructionUtil.stopOnException(this);
   }
+
   default I timeout(long millis) {
     return FlowInstructionUtil.setTimeout(this, millis);
   }
@@ -60,7 +61,7 @@ public interface GroupUtil<I> extends FlowInstruction {
     return setAggregator(this, consumer);
   }
 
-  default <T, U, V, X, Y, Z, A> I aggregator(ParamHeptaConsumer<T, U, V, X, Y, Z, A> consumer){
+  default <T, U, V, X, Y, Z, A> I aggregator(ParamHeptaConsumer<T, U, V, X, Y, Z, A> consumer) {
     return setAggregator(this, consumer);
   }
 

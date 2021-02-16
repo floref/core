@@ -18,7 +18,7 @@ package org.floref.core.exception;
 
 public class FlowNotAnInterfaceException extends FlowDefinitionException {
 
-    public FlowNotAnInterfaceException(Class flowClass, Exception e) {
-        super(flowClass.getCanonicalName() + " needs to be a Java interface in order to define flows from it.", e);
-    }
+  public FlowNotAnInterfaceException(Class flowClass, Exception e) {
+    super(flowClass.getCanonicalName() + " needs to be a Java interface in order to define flows from it.", e);
+  }
 }

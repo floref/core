@@ -16,15 +16,15 @@
 
 package org.floref.core.dsl.command.group;
 
-import static org.floref.core.dsl.command.FlowCommandBuilders.FOR_EACH;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.floref.core.flow.run.CommandContext;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.floref.core.flow.build.FlowObjectMethods.ToStringIndexes;
-import org.floref.core.flow.run.CommandContext;
+
+import static org.floref.core.dsl.command.FlowCommandBuilders.FOR_EACH;
 
 /**
  * .forEach
@@ -37,7 +37,7 @@ public class ForEachCommand extends GroupCommandUtil {
   @Override
   public void run(CommandContext commandContext) throws Exception {
 
-    Collection toBeSplit = (Collection)commandContext.getArguments()[0];
+    Collection toBeSplit = (Collection) commandContext.getArguments()[0];
 
     List<CommandCallable> callables = new ArrayList();
     long iteration = 0;

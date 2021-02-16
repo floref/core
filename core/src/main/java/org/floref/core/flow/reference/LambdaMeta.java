@@ -16,17 +16,19 @@
 
 package org.floref.core.flow.reference;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.floref.core.flow.annotation.FlowVar;
+
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.util.ArrayList;
 import java.util.List;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.floref.core.flow.annotation.FlowVar;
 
 /**
  * Lambda meta util.
+ *
  * @param <T>
  * @author Cristian Donoiu
  */
@@ -79,6 +81,7 @@ public class LambdaMeta<T> {
       this.position = position;
     }
   }
+
   public Class<T> getLambdaClass() {
     return lambdaClass;
   }
@@ -149,35 +152,37 @@ public class LambdaMeta<T> {
   public String getMethodReferenceAsString() {
     return lambdaClass.getCanonicalName() + "::" + lambdaMethod.getName();
   }
+
   public String getActualMethodReferenceAsString() {
     return lambdaActualClass.getCanonicalName() + "::" + lambdaActualMethod.getName();
   }
 
   /**
    * Retrieves method return type, parameter types and FlowVar annotation info.
+   *
    * @param method
    */
   public void buildMethodMeta(Method method) {
     returnType = method.getReturnType();
 
     Annotation[] methodAnnotations = method.getAnnotations();
-    for (int i = 0; i<methodAnnotations.length; i++) {
+    for (int i = 0; i < methodAnnotations.length; i++) {
       if (methodAnnotations[i] instanceof FlowVar) {
-        returnFlowVar = (FlowVar)methodAnnotations[i];
+        returnFlowVar = (FlowVar) methodAnnotations[i];
       }
     }
 
     Parameter[] methodParameters = method.getParameters();
     parameters = new ArrayList<>();
-    for (int i = 0; i<methodParameters.length; i++) {
+    for (int i = 0; i < methodParameters.length; i++) {
       Parameter parameter = methodParameters[i];
       MethodParameter methodParameter = new MethodParameter();
       methodParameter.clazz = Methods.primitiveToWrapper(parameter.getType());
       methodParameter.position = i;
       Annotation[] paramAnnotations = parameter.getAnnotations();
-      for (int j = 0; j<paramAnnotations.length; j++) {
+      for (int j = 0; j < paramAnnotations.length; j++) {
         if (paramAnnotations[j] instanceof FlowVar) {
-          methodParameter.flowVar = (FlowVar)paramAnnotations[j];
+          methodParameter.flowVar = (FlowVar) paramAnnotations[j];
         }
       }
       parameters.add(methodParameter);

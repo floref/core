@@ -29,43 +29,43 @@ import static org.floref.core.dsl.command.FlowCommandBuilders.TO;
 public interface To<P> extends FlowInstruction {
 
   default P to(ParamVoidConsumerVoidSupplier consumer) {
-    return (P)getFlowData().addChild(TO, consumer);
+    return (P) getFlowData().addChild(TO, consumer);
   }
 
   default <T> P to(ParamSupplier<T> consumer) {
-    return (P)getFlowData().addChild(TO, consumer);
+    return (P) getFlowData().addChild(TO, consumer);
   }
 
   default <T> P to(ParamConsumer<T> consumer) {
-    return (P)getFlowData().addChild(TO, consumer);
+    return (P) getFlowData().addChild(TO, consumer);
   }
 
   default <T, U> P to(ParamBiConsumer<T, U> consumer) {
-    return (P)getFlowData().addChild(TO, consumer);
+    return (P) getFlowData().addChild(TO, consumer);
   }
 
   default <T, U, V> P to(ParamTriConsumer<T, U, V> consumer) {
-    return (P)getFlowData().addChild(TO, consumer);
+    return (P) getFlowData().addChild(TO, consumer);
   }
 
   default <T, U, V, X> P to(ParamTetraConsumer<T, U, V, X> consumer) {
-    return (P)getFlowData().addChild(TO, consumer);
+    return (P) getFlowData().addChild(TO, consumer);
   }
 
   default <T, U, V, X, Y> P to(ParamPentaConsumer<T, U, V, X, Y> consumer) {
-    return (P)getFlowData().addChild(TO, consumer);
+    return (P) getFlowData().addChild(TO, consumer);
   }
 
   default <T, U, V, X, Y, Z> P to(ParamHexaConsumer<T, U, V, X, Y, Z> consumer) {
-    return (P)getFlowData().addChild(TO, consumer);
+    return (P) getFlowData().addChild(TO, consumer);
   }
 
-  default <T, U, V, X, Y, Z, A> P to(ParamHeptaConsumer<T, U, V, X, Y, Z, A> consumer){
-    return (P)getFlowData().addChild(TO, consumer);
+  default <T, U, V, X, Y, Z, A> P to(ParamHeptaConsumer<T, U, V, X, Y, Z, A> consumer) {
+    return (P) getFlowData().addChild(TO, consumer);
   }
 
   default <T> P to(LambdaMeta<T> lambdaMeta) {
-    return (P)getFlowData().addChild(TO, lambdaMeta);
+    return (P) getFlowData().addChild(TO, lambdaMeta);
   }
 
   //  @FunctionalInterface
@@ -78,6 +78,6 @@ public interface To<P> extends FlowInstruction {
 
   default P alias(String alias) {
     getFlowData().getCurrentCommand().alias(alias);
-    return (P)this;
+    return (P) this;
   }
 }

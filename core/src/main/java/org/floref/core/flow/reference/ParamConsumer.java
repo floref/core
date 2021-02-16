@@ -21,6 +21,7 @@ import java.io.Serializable;
 /**
  * A serializable lambda can provide access to SerializedLambda class.
  * Used to handle method reference referred by instance with one parameter OR referred by class with no parameters(the only parameter will be the class name)
+ *
  * @author Cristian Donoiu
  */
 public interface ParamConsumer<T> extends MethodReference<T>, Serializable {

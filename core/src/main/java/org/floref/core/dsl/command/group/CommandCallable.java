@@ -16,9 +16,9 @@
 
 package org.floref.core.dsl.command.group;
 
-import java.util.concurrent.Callable;
-import org.floref.core.dsl.command.FlowCommand;
 import org.floref.core.flow.run.CommandContext;
+
+import java.util.concurrent.Callable;
 
 public class CommandCallable {
   String id;

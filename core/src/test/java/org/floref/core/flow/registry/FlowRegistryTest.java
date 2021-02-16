@@ -33,16 +33,28 @@ public class FlowRegistryTest {
   }
 
   @Test
-  public void test(){
+  public void test() {
     TestFlows testFlows = Flows.from(TestFlows::length)
         .to(String::length)
         .build();
 
     testFlows.length("a");
 
-    assertEquals(testFlows, Flows.getFlow(TestFlows.class));
+    assertEquals(testFlows, Flows.get(TestFlows.class));
     assertEquals(FlowRegistry.getFlowInstanceData(testFlows), FlowRegistry.getFlowInstanceData(testFlows));
     FlowInstanceData flowInstanceData = FlowRegistry.getFlowInstanceData(testFlows);
     assertEquals(testFlows, FlowRegistry.getFlow(flowInstanceData.getFlowDefinitions().get(0)));
   }
+
+  @Test
+  public void testById() {
+    TestFlows testFlows = Flows
+        .from(TestFlows::length).id("group:f1")
+        .to(String::length)
+        .build();
+
+
+    assertEquals(testFlows, Flows.get(TestFlows.class, "group"));
+  }
+
 }

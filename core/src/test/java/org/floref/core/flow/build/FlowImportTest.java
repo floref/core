@@ -53,11 +53,11 @@ public class FlowImportTest {
     // 1. Export flow.
     String json = Flows.export(flows);
     Flows.deleteAll(); // Clear all.
-    assertEquals(null, Flows.getFlow(TestFlows.class));
+    assertEquals(null, Flows.get(TestFlows.class));
 
     // 2. Import flow from JSON.
     Flows.importFlows(json);
-    flows = Flows.getFlow(TestFlows.class);
+    flows = Flows.get(TestFlows.class);
 
     // 3. Test the flow is runnable.
     assertEquals("AB", flows.mergeTwoStrings("a", "b"));

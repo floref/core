@@ -25,7 +25,6 @@ import org.floref.core.flow.registry.FlowRegistry;
 import java.lang.reflect.Proxy;
 
 /**
- *
  * @author Cristian Donoiu
  */
 public class FlowInstanceBuilder {
@@ -43,7 +42,7 @@ public class FlowInstanceBuilder {
             // https://docs.oracle.com/javase/8/docs/technotes/guides/reflection/proxy.html
             Object flowInstance = Proxy.newProxyInstance(
                 flowClass.getClassLoader(),
-                new Class[] {flowClass},
+                new Class[]{flowClass},
                 flowInvocationHandler);
 
             // Register the flow.

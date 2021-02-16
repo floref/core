@@ -20,6 +20,7 @@ import java.io.Serializable;
 
 /**
  * Catches 4 params method references with instance target or 3 params with class target.
+ *
  * @author Cristian Donoiu
  */
 public interface ParamTetraConsumer<T, U, V, X> extends MethodReference<T>, Serializable {

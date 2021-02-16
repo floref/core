@@ -1,47 +1,99 @@
 # Floref
-Floref comes from **flo**w **ref**erence. A flow reference is a method reference towards a flow starting method.
-Floref is a Java workflow engine based on functional programming with the **method reference as the building
- block**: <br>
-- Method references are used to refer/run existing code or other workflows. 
-- Define a flow using fluent instructions that act on method references. <br>
-- Runtime flow import/update (from a database/UI) can be done by using method references and their aliases. 
+**Floref is a complete workflow definition framework for Java.**<br>
 
-# What is a flow
-*A workflow consists of an orchestrated and repeatable pattern of activity ... (wikipedia)*.
-Translated into code: **a workflow is a method from an interface** also called the flow start method since it uniquely 
-identifies the flow.<br>
-Floref fluent API is used to create a flow definition in 3 steps.
+You create a workflow by **method reference linking**, thus method references act as the building blocks.<br>
+Enterprise integration patterns and ease of use are the driving factors behind the API.
+Workflows can be updated at runtime or loaded from a database.  
+ 
+## Flow reference
+A *flow reference* is a method reference from a Java interface class that when called runs a flow. <br>
+You declare just the interface methods, the interface will be implemented at runtime by the framework. <br>
+**Behind the scene**: at runtime we create a Java [proxy](https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Proxy.html)
+ instance implementing the flow reference method according to the flow definition.
 
-# The 3 steps
+Thus you can run a flow by calling your own methods, with **no imposed external APIs** needed.<br> 
+
+##  1, 2, 3. 
 ```java
-// 1. Create interface with flow start methods with any name/parameters/return.
-public interface JobFlows {
-  Job processJob(Job job); // flow 1
-  void recordJob(...);     // flow 2
+// 1. Flow holder
+public interface FooFlows {
+  FooJob doJob(FooJob job);    // flow 1
+  void archiveJob(FooJob job); // flow 2
 }
 
-// 2. Define and build.
-JobFlows flows = Flows.from(JobFlows::processJob)
-  .to(anyBean::validateData)    // call any object
-  .fork(JobFlows::recordJob)    // call another flow
-  .retry(anyBean::method).times(10).delay(1000)  // retry
+// 2. Define flow using instructions. There are many instructions available, and you can add your own also.
+FooFlows flows = Flows.from(FooFlows::doJob)
+  .to(anyObject::validateData)   // calls existing code synchronously
+  .fork(FooFlows::archiveJob)    // asynchronous call of another object method or another flow (flow composition) 
+  .retry(anyObject::method).times(10).delay(1000)  // retry
   .build();
 
 // 3. Run.
-flows.processJob(job);
+flows.doJob(job);
 ```
-Step 1 (and step 3) are **unrestricted developer API**. Any interface method can become a flow. <br>
-Step 2 is the flow definition and builds and returns the workflow instance from that definition.<br>
-Step 3: **no external APIs needed to run a flow**, just call the flow start method. <br>
-Defining and running a flow can not be simpler than this. <br>
-A flow is uniquely identified by an **interface method** which is natural since its implementation varies over time. <br>
-The `Flows` class used to define and build flows is generic so the returned flow instance is same type as the interface from the `from` command. <br>
-The definition has both compile and runtime checks in place so that the defined flow is **always valid**. 
 
+The benefits of the flow *definition by reference* style:
+ - ease of understanding the flow, since the method references are all yours
+ - the flow definition instructions (from, to, ...) are meaningful and easy to use
+ - existing code can be easily turned into a flow, with no need for your code to implement or extend an external class.  
+ - flows can be updated at runtime, exported/imported or saved in a database because a method reference is a reference
+   and a reference can be expressed as a string or it can be aliased with a code agnostic string alias.
+ - flows composition is natural as another flow is just another method reference.   
+
+##The 3 steps explained:
+ 1. Create an interface containing one or more flows (flow references). <br>
+    Consider grouping the flows into one or more interfaces according to functionality and project specificity.
+ 2. Use the flow definition API to define what the flow does. 
+    Instructions names are intuitive: `from`, `to`, `fork`, `parallel`, `retry`, `when`, `reversible`, etc. 
+    For a complete set check the [`Instructions`](README.md#Instructions).
+    The `build()` at the end returns an implementation of the interface containing the flow start method and according
+    to the flow definition.
+    There is only one flow instance per method reference (unless it was given an ID, see bellow) thus redefining the 
+    flow will overwrite the previous definition.
+    Both existing code and other flows can be referenced (even if not implemented yet). <br>
+    The returned flow class can be saved for later use or registered as an injectable bean manually. If you use Spring 
+    framework add the artifact "floref-spring" as a project dependency and all flows will be registered as beans 
+    automatically. <br> 
+    Alternatively you can use `Flows.get(FooFlows.class)` from anywhere to get an already defined flow class instance.
+    
+    **Flow identification:** 
+          
+    The flow reference (flow start method) uniquely identifies a flow. <br>
+    Sometimes you may need to reuse the same method, at the same time for different flow implementations. An example use
+    case is to allow end users of your system to create different workflows at run time. In this case use IDs to 
+    uniquely identify the flows:
+      ```java
+      Flows.from(FooFlows::doJob).id("foo1:job") // first flow
+          ...
+          .build();
+      Flows.from(FooFlows::doJob).id("foo2:job") // second flow, same flow reference but different id 
+          ...      
+          .to("foo1:job")  // call another flow by id instead of method reference.
+          .build();    
+      ```
+    The ID format needs to be `"flowGroup:flowName"`. You can retrieve the flow instance by the ID or by the 'flowGroup', e.g.:
+    `Flows.get(FooFlows.class, "foo1")`. 
+    The `build()` at the end returns the flow class instance, but you can also obtain it by ID or by the 'flowGroup':
+    `Flows.get(FooFlows.class, "foo1")`.<br>
+    To export/import a flow to/from JSON format use `Flows.importFlows` and `Flows.export`.<br>
+    
+    **Method input/output binding:**
+     
+    By default the output of one instruction(or method reference) will become the input of
+    the next instruction. Thus the instructions order in your flow and the method parameters and return type needs to 
+    reflect the execution order. Otherwise, the flow will not be valid. <br>
+    For more flexible data input/output transmission you can use the @FlowVar annotation to mark and refer intermediary
+    results spawning the flow execution. 
+    See [Input/Output binding](#Input/Output binding) .   
+    The definition has both compile and runtime checks in place so that the defined flow is **always valid**. 
+    
+ 3: **no external APIs needed to run a flow**, just call the flow start method. <br>
+ 
 ## Instructions
-Remember there is only one building block - the method reference (aka flow step) but in order to construct 
-a working flow we need instructions. <br>
-The commands cover many **method integration patterns**, with detailed info in the dedicated chapter.
+There is only one building block - the method reference(also aliased with IDs) but in order to link the references we
+ need linking instructions. <br>
+The instructions set is rich, covering the most common uses and several enterprise integration patterns. Additional 
+instructions can be added by you. 
 - [`from`](README.md#from) starts a flow definition with the parameter being the flow start [method reference](README.md#Method-reference).
 - [`to`](README.md#to) executes a method or another flow (since both methods and flows are identified by a method reference).
 - [`build`](README.md#build) returns the flow instance. 
@@ -157,7 +209,7 @@ Method references are the **building block** of Floref. Like in functional progr
 Limitations:
 - Method references support was added from Java 8.
 - For code readability, a referenced method is limited to a maximum of 7 method parameters in order to be used within a flow definition.
-- The result of the previous method becomes the input of the current method and thus in order to use more than 2 parameters they will have to be obtained from the flow session (annotated with @FlowVar).
+ The result of the previous method becomes the input of the current method and thus in order to use more than 2 parameters they will have to be obtained from the flow session (annotated with @FlowVar).
   See [Input/Output binding](#Input/Output binding)
 - Method references do not support overloading, having two methods with same name will make the method reference ambiguous.
 - For the moment Floref does not support inline lambdas e.g. `.to((a,b) -> {...})`
@@ -165,7 +217,7 @@ Limitations:
 ## Input/Output binding
 There are two coexisting ways the payload/data gets passed from one step to the other inside the flow: 
 1. Input/output method chaining
-2. Annotation based via workflow session
+2. Annotated method parameters. TODO: consider using Spring @Header annotation from spring messaging.
 
 ### Input/output method chaining
 The return object of one method/step becomes the input of the next one. <br>
@@ -345,7 +397,7 @@ public class AliasesTest {
 In order to not wait for a step to finish use `.fork(flowOrBean::method)` command. The flow will continue without 
 waiting for the result.
 ```java
-   JobFlows flows = from(JobFlows::log)
+   FooFlows flows = from(FooFlows::log)
         .fork(storageService::storeJob)  // long running task.
         .to(logService::logJob)
         .build();
@@ -622,8 +674,27 @@ We recommend that you set the error level on ERROR for org.flowref package.
 
 While in debug, inside an IDE the flow definition can be also seen by hovering over the flow instance.
 
+## Future functionalities
+1. Add transactionality to the flow using an embedded key value database like RocksDB or SQLite.
+  
 ## License
 Licensed under Apache License 2.0. <br>
 Contains bundled the following Apache License 2.0 licensed libraries:
  - [MJson](https://bolerio.github.io/mjson/) for JSON read/write.
  - Spring JCL for logging wrapper - by Juergen Hoeller.
+
+
+TODO: Create a console like tool that can be used while the process is started :
+     input: a method:reference and the output will be all the flows using it in topological sort order from the least
+            dependent
+            
+2. Posibilitate extindere annotare cu anotarea user-ului pentru a avea alte nume sau parametrii predefiniti:
+Meta annotation definition:
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
+@FlowVar
+public @interface MyVar {
+    @AliasFor(annotation = FlowVar.class, attribute = "id")
+    String id();
+}
+

@@ -16,37 +16,30 @@
 
 package org.floref.core.flow.annotation;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.lang.annotation.*;
 
 /**
  * Used to store and retrieve flow session variables. A flow session is valid for the entire time the flow is run
  * including forked code/flows started from it.
- *
+ * <p>
  * If annotation is on the method then the value returned will be saved in the session so that it can be used by
  * subsequent methods which can have parameters annotated.
  * <code>
  * interface Users {
- *   void setEmailByUserId(@FlowVar String userId, @FlowVar email)
- *   @FlowVar
- *   User getUser(@FlowVar String userId);
- *   void changeEmail(User user, @FlowVar String email); // Annotation not needed, previous step return was the User.
- *   void sendNotification(@FlowVar User user)           // Annotation needed, previous step return was void.
+ * void setEmailByUserId(@FlowVar String userId, @FlowVar email)
+ *
+ * @author Cristian Donoiu
+ * @FlowVar User getUser(@FlowVar String userId);
+ * void changeEmail(User user, @FlowVar String email); // Annotation not needed, previous step return was the User.
+ * void sendNotification(@FlowVar User user)           // Annotation needed, previous step return was void.
  * }
  * start().from(Users::setEmailByUserId)
- *   .to(Users::getUser)
- *   .to(Users::changeEmail) // Gets both the user and the info
- *   .to(Users::sendNotification)
+ * .to(Users::getUser)
+ * .to(Users::changeEmail) // Gets both the user and the info
+ * .to(Users::sendNotification)
  *
  * </code>
  * See also the documentation.
- *
- *
- *
- * @author Cristian Donoiu
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD, ElementType.PARAMETER})
@@ -59,7 +52,7 @@ public @interface FlowVar {
    * the session.
    * If there are more than two session variables of the same type then you will have to refer them by name.
    * <code>
-   *       void processJobs(@FlowVar("job1") Job job1, @FlowVar("job2") Job job2) {...}
+   * void processJobs(@FlowVar("job1") Job job1, @FlowVar("job2") Job job2) {...}
    * </code>
    */
   String value() default "";

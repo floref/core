@@ -78,7 +78,7 @@ public class FlowData<I, F> {   // I flow instruction, F flow class
   }
 
   public I addParent(String id, Object... params) {
-    ParentCommand flowCommand = (ParentCommand)FlowCommandBuilders.build(id, params);
+    ParentCommand flowCommand = (ParentCommand) FlowCommandBuilders.build(id, params);
     setCurrentParentAndRelations(flowCommand);
     setCurrentCommand(flowCommand);
     return instruction;

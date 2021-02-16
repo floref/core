@@ -16,41 +16,48 @@
 
 package org.floref.core.dsl;
 
+import org.floref.core.flow.annotation.FlowVar;
+
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Future;
-import org.floref.core.flow.annotation.FlowVar;
 
 public interface TestFlows {
 
-    void processZeroNoReturn();
+  void processZeroNoReturn();
 
-    int processZeroWithReturn();
+  int processZeroWithReturn();
 
-    String processOneStringReturnString(String s);
+  String processOneStringReturnString(String s);
 
-    String processOneStringWithAnnotation(@FlowVar("s1") String s);
+  String processOneStringWithAnnotation(@FlowVar("s1") String s);
 
-    String mergeTwoStrings(String s1, String s2);
-    Future<String> mergeTwoStringsInFuture(String s1, String s2);
-    CompletableFuture<String> mergeTwoStringsInCompletableFuture(String s1, String s2);
+  String mergeTwoStrings(String s1, String s2);
 
-    String mergeThreeStrings(String s1, String s2, String s3);
-    String mergeFourStrings(String s1, String s2, String s3, String s4);
-    String mergeFiveStrings(String s1, String s2, String s3, String s4, String s5);
-    String mergeSixStrings(String s1, String s2, String s3, String s4, String s5, String s6);
-    String mergeSevenStrings(String s1, String s2, String s3, String s4, String s5, String s6, String s7);
-    String mergeEightStrings(String s1, String s2, String s3, String s4, String s5, String s6, String s7, String s8);
+  Future<String> mergeTwoStringsInFuture(String s1, String s2);
 
-    int takeTwoStringsReturnInt(String s1, String s2);
+  CompletableFuture<String> mergeTwoStringsInCompletableFuture(String s1, String s2);
 
-    int length(String s1);
+  String mergeThreeStrings(String s1, String s2, String s3);
 
-    void processSix(int one, String two, int three, int four, String six);
+  String mergeFourStrings(String s1, String s2, String s3, String s4);
 
-    int processSeven(int one, String two, int three, int four, int six, int seven);
+  String mergeFiveStrings(String s1, String s2, String s3, String s4, String s5);
 
-    int reverse(int i);
+  String mergeSixStrings(String s1, String s2, String s3, String s4, String s5, String s6);
 
+  String mergeSevenStrings(String s1, String s2, String s3, String s4, String s5, String s6, String s7);
+
+  String mergeEightStrings(String s1, String s2, String s3, String s4, String s5, String s6, String s7, String s8);
+
+  int takeTwoStringsReturnInt(String s1, String s2);
+
+  int length(String s1);
+
+  void processSix(int one, String two, int three, int four, String six);
+
+  int processSeven(int one, String two, int three, int four, int six, int seven);
+
+  int reverse(int i);
 
 
 }

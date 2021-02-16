@@ -37,35 +37,35 @@ public class FlowInstructionUtil {
     if (!flowCommandClass.isAssignableFrom(currentCommand.getClass())) {
       throw new FlowDefinitionException(errorMessage);
     }
-    return (I)currentCommand;
+    return (I) currentCommand;
   }
 
   public static <I> I setAggregator(FlowInstruction flowCommand, MethodReference methodReference) {
     GroupCommandUtil groupCommandUtil = getInstructionCommand(flowCommand, GroupCommandUtil.class,
         "'.aggregator' must be used with a corresponding group command");
     groupCommandUtil.setAggregator(methodReference);
-    return (I)flowCommand;
+    return (I) flowCommand;
   }
 
   public static <I> I setTimeout(FlowInstruction flowCommand, long millis) {
     GroupCommandUtil groupCommandUtil = getInstructionCommand(flowCommand, GroupCommandUtil.class,
         "'.timeout' must be used with a corresponding group command");
     groupCommandUtil.setTimeout(millis);
-    return (I)flowCommand;
+    return (I) flowCommand;
   }
 
   public static <I> I stopOnException(FlowInstruction flowCommand) {
     GroupCommandUtil groupCommandUtil = getInstructionCommand(flowCommand, GroupCommandUtil.class,
         "'.stopOnException' must be used with a corresponding group command");
     groupCommandUtil.stopOnException();
-    return (I)flowCommand;
+    return (I) flowCommand;
   }
 
   public static <I> I setRevertBy(FlowInstruction flowCommand, MethodReference methodReference) {
     MethodReferenceCommand methodReferenceCommand = getInstructionCommand(flowCommand, ToCommand.class,
         "'.revertBy' currently supported only for '.to'");
     methodReferenceCommand.setRevertBy(methodReference);
-    return (I)flowCommand;
+    return (I) flowCommand;
   }
 
   public void copy(FlowInstruction src, FlowInstruction dest) {

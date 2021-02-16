@@ -16,11 +16,13 @@
 
 package org.floref.core.flow.reference.predicate;
 
-import java.io.Serializable;
 import org.floref.core.flow.reference.MethodReference;
+
+import java.io.Serializable;
 
 /**
  * Catches 7 params method references with instance target or 6 params with class target.
+ *
  * @author Cristian Donoiu
  */
 public interface PredicateParamHeptaConsumer<T, U, V, X, Y, Z, A> extends MethodReference<T>, Serializable {

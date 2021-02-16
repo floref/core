@@ -60,7 +60,6 @@ public class LambdaMetaBuilder {
   }
 
 
-
   public static LambdaMeta getLambdaMeta(MethodReference lambda) {
     LambdaMeta lambdaMeta = new LambdaMeta();
     SerializedLambda serializedLambda = getSerializedLambda(lambda);
@@ -128,6 +127,7 @@ public class LambdaMetaBuilder {
   public static <T, U> LambdaMeta getLambdaMetaFromConsumer(ParamBiConsumer<T, U> consumer) {
     return getLambdaMeta(consumer);
   }
+
   public static <T, U, V> LambdaMeta getLambdaMetaFromConsumer(ParamTriConsumer<T, U, V> consumer) {
     return getLambdaMeta(consumer);
   }

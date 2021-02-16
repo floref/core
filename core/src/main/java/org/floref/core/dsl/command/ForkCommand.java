@@ -41,6 +41,7 @@ public class ForkCommand extends MethodReferenceCommand {
   public ForkCommand(MethodReference toMethodReference) {
     super(toMethodReference);
   }
+
   public ForkCommand(LambdaMeta lambdaMeta) {
     super(lambdaMeta);
   }

@@ -17,13 +17,6 @@
 package org.floref.core.flow.build;
 
 
-import static org.floref.core.dsl.flow.Flows.from;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
 import org.floref.core.dsl.TestFlows;
 import org.floref.core.dsl.TestService;
 import org.floref.core.dsl.flow.Flows;
@@ -31,6 +24,12 @@ import org.floref.core.exception.FlowCancelledException;
 import org.floref.core.flow.run.FlowSession;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+
+import static org.floref.core.dsl.flow.Flows.from;
+import static org.junit.Assert.*;
 
 public class FlowFutureTest {
 
@@ -101,7 +100,7 @@ public class FlowFutureTest {
     } finally {
       try {
         thread.join();  // This is needed in order to reset the thread interrupt status, or else subsequent tests
-                        // might fail.
+        // might fail.
       } catch (Exception e) {
       }
     }

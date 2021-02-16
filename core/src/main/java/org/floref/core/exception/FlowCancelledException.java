@@ -25,7 +25,7 @@ package org.floref.core.exception;
  */
 public class FlowCancelledException extends RuntimeException {
 
-    public FlowCancelledException(String message) {
-        super(message);
-    }
+  public FlowCancelledException(String message) {
+    super(message);
+  }
 }

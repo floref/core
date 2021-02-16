@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 the FlowRef authors.
+ * Copyright 2020 the FloRef authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,11 +16,13 @@
 
 package org.floref.core.flow.reference.predicate;
 
-import java.io.Serializable;
 import org.floref.core.flow.reference.MethodReference;
+
+import java.io.Serializable;
 
 /**
  * Catches 2 params method references with instance target or 1 param with class target.
+ *
  * @author Cristian Donoiu
  */
 public interface PredicateParamBiConsumer<T, U> extends MethodReference<T>, Serializable {

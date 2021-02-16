@@ -16,18 +16,19 @@
 
 package org.floref.core.dsl.flow.parallel;
 
-import org.floref.core.dsl.flow.Base;
+import org.floref.core.dsl.flow.BaseInstructionImpl;
 import org.floref.core.dsl.flow.data.FlowInstruction;
 import org.floref.core.dsl.flow.group.GroupUtil;
 
 /**
  * Parallel entry point.
+ *
  * @author Cristian Donoiu
  */
-public class Parallel<P, F> extends Base<P, F> implements GroupUtil<Parallel<P, F>> {
+public class Parallel<P, F> extends BaseInstructionImpl<P, F> implements GroupUtil<Parallel<P, F>> {
 
-    public Parallel(FlowInstruction src) {
-      setFlowData(src.getFlowData());
-      getFlowData().setInstruction(this);
-    }
+  public Parallel(FlowInstruction src) {
+    setFlowData(src.getFlowData());
+    getFlowData().setInstruction(this);
+  }
 }

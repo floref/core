@@ -32,6 +32,7 @@ public class FlowPayload {
 
   public FlowPayload() {
   }
+
   public FlowPayload(Map map) {
     init(map);
   }
@@ -42,7 +43,7 @@ public class FlowPayload {
     if (flowsList == null || !(flowsList instanceof List)) {
       throw new FlowDefinitionException("'" + FLOWS + "' must be a non empty list.");
     }
-    for (Object flow : (List)flowsList) {
+    for (Object flow : (List) flowsList) {
       if (flow == null || !(flow instanceof Map)) {
         throw new FlowDefinitionException("Flow must be a non empty map.");
       }
@@ -64,7 +65,7 @@ public class FlowPayload {
         if (aliasValue == null || !(aliasValue instanceof String)) {
           throw new FlowDefinitionException("Alias value must be a non empty string.");
         }
-        aliases.put((String)alias, (String)aliasValue);
+        aliases.put((String) alias, (String) aliasValue);
       }
     }
   }

@@ -26,36 +26,43 @@ public class ReversibleTest {
   public class Pojo { // some pojo
     int i;
   }
+
   public Pojo plus(Pojo pojo) {
     pojo.i += 2;
     return pojo;
   }
+
   public Pojo minus(Pojo pojo) {
-    pojo.i-=2;
+    pojo.i -= 2;
     return pojo;
   }
+
   public Pojo multiply(Pojo pojo) {
     pojo.i = pojo.i * 2;
     return pojo;
   }
+
   public Pojo divide(Pojo pojo) {
     pojo.i = pojo.i / 2;
     return pojo;
   }
+
   public Pojo failHere(Pojo pojo) {
     throw new RuntimeException("failHere");
   }
+
   public interface Flows {
     Pojo testRevert(Pojo i);
   }
+
   @Test
   public void test() {
     ReversibleTest test = new ReversibleTest();
     Flows flows = from(Flows::testRevert)
         .reversible()
-          .to(test::plus).revertBy(test::minus)
-          .to(test::multiply).revertBy(test::divide)
-          .to(test::failHere)
+        .to(test::plus).revertBy(test::minus)
+        .to(test::multiply).revertBy(test::divide)
+        .to(test::failHere)
         .build();
 
     Pojo pojo = new Pojo();

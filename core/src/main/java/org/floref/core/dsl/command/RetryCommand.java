@@ -40,6 +40,7 @@ public class RetryCommand extends MethodReferenceCommand {
   public RetryCommand(MethodReference toMethodReference) {
     super(toMethodReference);
   }
+
   public RetryCommand(LambdaMeta lambdaMeta) {
     super(lambdaMeta);
   }

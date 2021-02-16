@@ -20,6 +20,7 @@ import java.io.Serializable;
 
 /**
  * Catches methods with no parameter on class target.
+ *
  * @author Cristian Donoiu
  */
 public interface ParamSupplier<T> extends MethodReference<T>, Serializable {

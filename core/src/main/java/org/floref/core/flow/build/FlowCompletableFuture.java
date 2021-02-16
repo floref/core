@@ -16,14 +16,10 @@
 
 package org.floref.core.flow.build;
 
-import static org.floref.core.flow.run.FlowUtil.CANCELLED;
-
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
+
+import static org.floref.core.flow.run.FlowUtil.CANCELLED;
 
 /**
  * Future wrapper that can be used to interrupt a flow execution.
@@ -32,13 +28,15 @@ import java.util.concurrent.TimeoutException;
  */
 public class FlowCompletableFuture extends CompletableFuture {
   Map session;
+
   FlowCompletableFuture(Map session) {
     this.session = session;
   }
+
   @Override
   public boolean cancel(boolean mayInterruptIfRunning) {
     // Since the future.cancel may be called from another thread.
-    if (session!= null) {
+    if (session != null) {
       session.put(CANCELLED, true);
     }
     return cancel(mayInterruptIfRunning);

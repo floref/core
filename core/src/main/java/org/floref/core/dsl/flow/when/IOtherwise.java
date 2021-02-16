@@ -40,7 +40,7 @@ public interface IOtherwise<P, F> extends FlowInstruction {
     }
 
     ParentCommand otherwiseCommand = (ParentCommand) FlowCommandBuilders.build(OTHERWISE);
-    WhenCommand whenCommand = (WhenCommand)parent;
+    WhenCommand whenCommand = (WhenCommand) parent;
     whenCommand.setOtherwise(otherwiseCommand);
 
     // The parent is the parent of 'then' but the 'otherwise' will not be a child so as to not get executed

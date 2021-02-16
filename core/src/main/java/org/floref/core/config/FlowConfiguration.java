@@ -16,17 +16,18 @@
 
 package org.floref.core.config;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.floref.core.config.consumer.MetricsConsumer;
+import org.floref.core.config.injector.BeanInjector;
+import org.floref.core.config.injector.ConfigInjector;
+import org.floref.core.dsl.flow.from.From;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.CopyOnWriteArrayList;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.floref.core.config.injector.BeanInjector;
-import org.floref.core.config.injector.ConfigInjector;
-import org.floref.core.config.consumer.MetricsConsumer;
-import org.floref.core.dsl.flow.From;
 
 /**
  * Floref configuration class.
@@ -44,6 +45,7 @@ public class FlowConfiguration {
 
   /**
    * Get the entire configuration.
+   *
    * @return the configuration that you can use to set get/set particular properties.
    */
   protected static FlowConfiguration get() {
@@ -64,6 +66,7 @@ public class FlowConfiguration {
   /**
    * Returns the configuration value for the given key. First looks in the configinjector, then it looks in the
    * floref.properties classpath file.
+   *
    * @param key
    * @return the config value.
    */
@@ -109,7 +112,7 @@ public class FlowConfiguration {
   /**
    * Set bean injector. Called by spring integration or the user in order to set a bean provider when method reference
    * with the target a Class are used in a flow. For example given a call like <b>.to(UserService::createUser)</b>
-   *
+   * <p>
    * If UserService is not a flow class and the createUser is not a static method then the target instance on which the
    * method will be run will be obtained from the BeanInjector that is set here.
    */
@@ -134,6 +137,7 @@ public class FlowConfiguration {
       get().metricsConsumerList.add(metricsConsumer);
     }
   }
+
   public static void removeMetricsConsumer(MetricsConsumer metricsConsumer) {
     get().metricsConsumerList.remove(metricsConsumer);
   }

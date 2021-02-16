@@ -19,7 +19,7 @@ package org.floref.core.dsl.flow.impex;
 import mjson.Json;
 import org.floref.core.dsl.command.FlowCommand;
 import org.floref.core.dsl.command.MethodReferenceCommand;
-import org.floref.core.dsl.flow.Base;
+import org.floref.core.dsl.flow.BaseInstructionImpl;
 import org.floref.core.dsl.flow.Flows;
 import org.floref.core.exception.FlowDefinitionException;
 import org.floref.core.flow.build.FlowInstanceData;
@@ -67,16 +67,16 @@ public class FlowImpex {
   }
 
 
-  private static void importFlow(FlowStep flowStep, Base base) {
-    for (FlowStep step: flowStep.getChildren()) {
+  private static void importFlow(FlowStep flowStep, BaseInstructionImpl baseInstructionImpl) {
+    for (FlowStep step : flowStep.getChildren()) {
       LambdaMeta lambdaMeta = step.getRefLambdaMeta();
       switch (step.getType()) {
         case TO: {
-          base.to(lambdaMeta);
+          baseInstructionImpl.to(lambdaMeta);
           break;
         }
         case FORK: {
-          base.fork(lambdaMeta);
+          baseInstructionImpl.fork(lambdaMeta);
           break;
         }
 //        case WHEN: {
@@ -101,6 +101,7 @@ public class FlowImpex {
       }
     }
   }
+
   public static void importFlows(String json) {
     Map map = Json.read(json).asMap();
     FlowPayload payload = new FlowPayload(map);
@@ -112,9 +113,9 @@ public class FlowImpex {
     // Import/overwrite flows.
     for (FlowStep flow : payload.getFlows()) {
       LambdaMeta from = flow.getRefLambdaMeta();
-      Base base = Flows.from(from);
-      importFlow(flow, base);
-      Object flowInstance = base.build();
+      BaseInstructionImpl baseInstructionImpl = Flows.from(from);
+      importFlow(flow, baseInstructionImpl);
+      Object flowInstance = baseInstructionImpl.build();
     }
   }
 }

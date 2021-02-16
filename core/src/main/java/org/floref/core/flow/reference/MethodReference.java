@@ -18,8 +18,8 @@ package org.floref.core.flow.reference;
 
 /**
  * Common class for capturing all method references.
- * @param <T>
  *
+ * @param <T>
  * @author Cristian Donoiu
  */
 public interface MethodReference<T> {

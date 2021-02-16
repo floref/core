@@ -28,6 +28,7 @@ import org.floref.core.config.FlowConfiguration;
 public class MetricsHelper {
   static final Log LOG = LogFactory.getLog(MetricsHelper.class);
   static DefaultMetricsConsumer defaultMetricsConsumer = new DefaultMetricsConsumer();
+
   static {
     FlowConfiguration.addMetricsConsumer(defaultMetricsConsumer);
   }
@@ -35,8 +36,9 @@ public class MetricsHelper {
   interface MetricRunner {
     void run(MetricsConsumer metricsConsumer);
   }
+
   public static void runMetric(MetricRunner metricRunner) {
-    for(MetricsConsumer metricsConsumer : FlowConfiguration.getMetricsConsumerList()) {
+    for (MetricsConsumer metricsConsumer : FlowConfiguration.getMetricsConsumerList()) {
       try {
         metricRunner.run(metricsConsumer);
       } catch (Exception e) {
@@ -48,7 +50,7 @@ public class MetricsHelper {
 
   public static void beforeFlow(FlowMetrics flowMetrics) {
     runMetric((metricsConsumer) -> {
-        metricsConsumer.beforeFlow(flowMetrics);
+      metricsConsumer.beforeFlow(flowMetrics);
     });
   }
 

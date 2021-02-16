@@ -54,8 +54,8 @@ public abstract class GroupCommandUtil extends ParentCommand {
   }
 
   public GroupCommandUtil() {
-      // Set default aggregator.
-      aggregator = new MethodReferenceCommand(GroupCommandUtil::defaultAggregator);
+    // Set default aggregator.
+    aggregator = new MethodReferenceCommand(GroupCommandUtil::defaultAggregator);
   }
 
   @Override

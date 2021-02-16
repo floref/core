@@ -41,6 +41,7 @@ public class WhenCommand extends ParentCommand {
   public WhenCommand(MethodReference methodReference) {
     this.conditionMethod = new MethodReferenceCommand(methodReference);
   }
+
   public WhenCommand(LambdaMeta lambdaMeta) {
     conditionMethod = new MethodReferenceCommand(lambdaMeta);
   }

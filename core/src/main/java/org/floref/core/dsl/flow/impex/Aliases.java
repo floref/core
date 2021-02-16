@@ -33,22 +33,22 @@ import java.util.concurrent.ConcurrentHashMap;
  * Represents a String alias for a method reference. The aliases are of 2 different types:
  * 1. Class targeting:  Class::method
  * 2. Instance targeting: <class instance>::method
- *
+ * <p>
  * 1. The Class targeting aliases are the most common. They can accommodate:
- *  - flows instance: <code>FlowClass::method</code>
- *  - static methods: <code>Class::method</code>
- *  - instances that are injectable via BeanInjector.java (e.g. Spring beans) in the form of
- *  <code>BeanClass::method</code>. Thus a class targeting alias can target class instances eventually.
- *
+ * - flows instance: <code>FlowClass::method</code>
+ * - static methods: <code>Class::method</code>
+ * - instances that are injectable via BeanInjector.java (e.g. Spring beans) in the form of
+ * <code>BeanClass::method</code>. Thus a class targeting alias can target class instances eventually.
+ * <p>
  * 2. The instance only targeting is used when the instance is not a flow, static method or injectable bean.
- *    For example a flow that uses pojo targets for method references will use those pojo instances.
- *    <code>
-
+ * For example a flow that uses pojo targets for method references will use those pojo instances.
+ * <code>
  *
- *    </code>
- *    When export a flow that uses instances that were not injected via the BeanInjector they will appear under the
- *    aliases section in the JSON.
- *    The aliases will be generated automatically in the form of "
+ *
+ * </code>
+ * When export a flow that uses instances that were not injected via the BeanInjector they will appear under the
+ * aliases section in the JSON.
+ * The aliases will be generated automatically in the form of "
  */
 public class Aliases {
   private static final Log LOG = LogFactory.getLog(Aliases.class);
@@ -58,6 +58,7 @@ public class Aliases {
 
   /**
    * Returns the target bean or target flow lambda meta. The provided lambda meta might be on a proxy.
+   *
    * @param lambdaMeta
    * @return
    */
@@ -66,7 +67,7 @@ public class Aliases {
     Object target = lambdaMeta.getTarget();
 
     // Non static method the target is an instance which may have been obtained as a flow or via bean injector.
-    if (target!= null) {
+    if (target != null) {
       if (FlowRegistry.isFlow(target)) {
         // Change the lambdaMeta so that the target is the flow interface class and not the proxy.
         lambdaMeta = LambdaMetaBuilder.getLambdaMeta(FlowRegistry.getFlowInterface(target), lambdaMeta.getLambdaMethod());
@@ -84,8 +85,10 @@ public class Aliases {
     }
     return lambdaMeta;
   }
+
   /**
    * Common alias creator.
+   *
    * @param alias
    * @param lambdaMeta
    */
@@ -101,8 +104,8 @@ public class Aliases {
       // Runtime aliases are a bit hard to generate statically: 1#class#method, 2#class#method if 2 different
       // instances are used in the same flow definition leading to hard to follow definitions.
       throw new FlowDefinitionException("Unsupported alias \"" + alias + "\" for "
-              + lambdaMeta.getMethodReferenceAsString() + " because class instance could not be retrieved via " +
-              "BeanInjector");
+          + lambdaMeta.getMethodReferenceAsString() + " because class instance could not be retrieved via " +
+          "BeanInjector");
     }
 
     ALIASES.put(alias, targetLambdaMeta);
@@ -122,7 +125,8 @@ public class Aliases {
 
   /**
    * Adds an alias for the given string which defines a method reference.
-   * @param alias which can be used in the JSON for create/update/export of flows.
+   *
+   * @param alias                   which can be used in the JSON for create/update/export of flows.
    * @param methodReferenceAsString "Class:method"
    */
   public static void add(String alias, String methodReferenceAsString) {
@@ -132,7 +136,8 @@ public class Aliases {
 
   /**
    * Adds an alias for the given method reference.
-   * @param alias which can be used in the JSON for create/update/export of flows.
+   *
+   * @param alias           which can be used in the JSON for create/update/export of flows.
    * @param methodReference
    */
   public static void add(String alias, MethodReference methodReference) {
@@ -207,7 +212,6 @@ public class Aliases {
   public static LambdaMeta getAliasLambdaMeta(String alias) {
     return ALIASES.get(alias);
   }
-
 
 
   public static Map<String, LambdaMeta> getAliases() {

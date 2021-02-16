@@ -17,6 +17,8 @@
 package org.floref.core.dsl.flow;
 
 import org.floref.core.dsl.flow.data.FlowDefinition;
+import org.floref.core.dsl.flow.from.From;
+import org.floref.core.dsl.flow.from.FromBaseInstructionImpl;
 import org.floref.core.dsl.flow.impex.FlowImpex;
 import org.floref.core.exception.FlowValidationException;
 import org.floref.core.flow.build.FlowInstanceData;
@@ -29,77 +31,81 @@ import java.util.Objects;
 
 /**
  * Used to define/build a flow and also to export/import flows.
- * Contains static methods that build FlowRef instances.
- * "from" calls are equivalent with calling <code>new From().from(...)</code>
- * @see From
+ *
  * @author Cristian Donoiu
  */
 public class Flows {
 
   /**
-   * Call it to startCommand the definition of a workflow.
+   * Call it to startCommand the definition of a workflow. FC designes the flow interface class.
    */
-  public static <FLOW_CLASS> Base<From<FLOW_CLASS>, FLOW_CLASS> from(ParamSupplier<FLOW_CLASS> consumer) {
+  public static <FC> FromBaseInstructionImpl<From<FC>, FC> from(ParamSupplier<FC> consumer) {
     return new From().from(consumer);
   }
 
-  public static <FLOW_CLASS> Base<From<FLOW_CLASS>, FLOW_CLASS> from(ParamConsumer<FLOW_CLASS> consumer) {
+  public static <FC> FromBaseInstructionImpl<From<FC>, FC> from(ParamConsumer<FC> consumer) {
     return new From().from(consumer);
   }
 
-  public static <FLOW_CLASS, U> Base<From<FLOW_CLASS>, FLOW_CLASS> from(ParamBiConsumer<FLOW_CLASS, U> consumer) {
+  public static <FC, U> FromBaseInstructionImpl<From<FC>, FC> from(ParamBiConsumer<FC, U> consumer) {
     return new From().from(consumer);
   }
 
-  public static <FLOW_CLASS, U, V> Base<From<FLOW_CLASS>, FLOW_CLASS> from(ParamTriConsumer<FLOW_CLASS, U, V> consumer) {
+  public static <FC, U, V> FromBaseInstructionImpl<From<FC>, FC> from(ParamTriConsumer<FC, U, V> consumer) {
     return new From().from(consumer);
   }
 
-  public static <FLOW_CLASS, U, V, X> Base<From<FLOW_CLASS>, FLOW_CLASS> from(ParamTetraConsumer<FLOW_CLASS, U, V, X> consumer) {
+  public static <FC, U, V, X> FromBaseInstructionImpl<From<FC>, FC> from(ParamTetraConsumer<FC, U, V, X> consumer) {
     return new From().from(consumer);
   }
 
-  public static <FLOW_CLASS, U, V, X, Y> Base<From<FLOW_CLASS>, FLOW_CLASS> from(
-      ParamPentaConsumer<FLOW_CLASS, U, V, X, Y> consumer) {
+  public static <FC, U, V, X, Y> FromBaseInstructionImpl<From<FC>, FC> from(ParamPentaConsumer<FC, U, V, X, Y> consumer) {
     return new From().from(consumer);
   }
 
-  public static <FLOW_CLASS, U, V, X, Y, Z> Base<From<FLOW_CLASS>, FLOW_CLASS> from(
-      ParamHexaConsumer<FLOW_CLASS, U, V, X, Y, Z> consumer) {
+  public static <FC, U, V, X, Y, Z> FromBaseInstructionImpl<From<FC>, FC> from(ParamHexaConsumer<FC, U, V, X, Y, Z> consumer) {
     return new From().from(consumer);
   }
 
-  public static <FLOW_CLASS, U, V, X, Y, Z, A> Base<From<FLOW_CLASS>, FLOW_CLASS> from(
-      ParamHeptaConsumer<FLOW_CLASS, U, V, X, Y, Z, A> consumer) {
+  public static <FC, U, V, X, Y, Z, A> FromBaseInstructionImpl<From<FC>, FC> from(ParamHeptaConsumer<FC, U, V, X, Y, Z, A> consumer) {
     return new From().from(consumer);
   }
 
-  public static <FLOW_CLASS, U, V, X, Y, Z, A, B> Base<From<FLOW_CLASS>, FLOW_CLASS> from(
-      ParamOctaConsumer<FLOW_CLASS, U, V, X, Y, Z, A, B> consumer) {
+  public static <FC, U, V, X, Y, Z, A, B> FromBaseInstructionImpl<From<FC>, FC> from(ParamOctaConsumer<FC, U, V, X, Y, Z, A, B> consumer) {
     return new From().from(consumer);
   }
 
-  public static <FLOW_CLASS> Base<From<FLOW_CLASS>, FLOW_CLASS> from(LambdaMeta<FLOW_CLASS> lambdaMeta) {
+  public static <FC> FromBaseInstructionImpl<From<FC>, FC> from(LambdaMeta<FC> lambdaMeta) {
     return new From().from(lambdaMeta);
   }
 
   /**
    * There are several options to obtain a flow in order to execute it:<br>
    * <ul>
-   * <li>1. Directly from definition: <code>MyFlows myFlows = FlowRef.from(MyFlows::flow1).to(...).build();</code>
-   * <li>2. If you use Spring just autowire/inject it from everywhere:
-   * <code>@Autowired
-   * MyFlows myFlows;
-   * </code>
-   * <li>3. Using this method.
+   * <li>1. Directly from definition: <code>MyFlows myFlows = Flows.from(MyFlows::flow1).to(...).build();</code>
+   * <li>2. Using this method.
+   * <li>3. If you use Spring just autowire/inject it from everywhere:
+   *   <code>@Autowired
+   *   MyFlows myFlows;
+   *   </code>
    */
-  public static <T> T getFlow(Class<T> flowInterfaceClass) {
+  public static <T> T get(Class<T> flowInterfaceClass) {
     return FlowRegistry.getFlow(flowInterfaceClass);
   }
 
+  public static <T> T get(Class<T> flowInterfaceClass, String id) {
+    return FlowRegistry.getFlow(flowInterfaceClass, id);
+  }
+
   /**
-   * Deletes all flows and invalidates them in case they are still used in the code, executing them again
-   * should throw an exception.
+   * Deletes all flows and invalidates them in case they are still used in the code, executing them again should throw an exception.
+   */
+  public static void deleteById() {
+    FlowRegistry.deleteAll();
+  }
+
+  /**
+   * Deletes all flows and invalidates them in case they are still used in the code, executing them again should throw an exception.
    */
   public static void deleteAll() {
     FlowRegistry.deleteAll();
@@ -111,6 +117,7 @@ public class Flows {
   public static <T> String export(Class<T> flowClass) {
     return FlowImpex.exportFlow(flowClass);
   }
+
   public static String export(Object flowInstance) {
     Objects.requireNonNull(flowInstance, "Flow instance is null");
     return export(FlowRegistry.getFlowInterface(flowInstance));
@@ -122,11 +129,12 @@ public class Flows {
 
 
   /**
-   * Saves one or multiple flows. If a flow already exists then it will be updated.
+   * Loads one or multiple flows. If a flow already exists then it will be replaced.
    */
   public static void importFlows(String flowJson) {
     FlowImpex.importFlows(flowJson);
   }
+
   /**
    * Validation of a flow can be executed at different moments:
    * 1. By default flows are validated only on the first run. This is needed in order to not create dependencies
@@ -134,8 +142,8 @@ public class Flows {
    * 2. There is also early validation at process startup but only after everything is started and configuration
    * property is:<code>flow.validateEarly=true</code>
    * 3. On demand by calling this for validating all. Validating will take one by one in isolation and validate and
-   *   will mark as valid (also other parents could call the same child flow) also childs so that they are not validated in isolation (this performs as topologic sort)
-   *   so that the flows with most of the dependencies are validated first.
+   * will mark as valid (also other parents could call the same child flow) also childs so that they are not validated in isolation (this performs as topologic sort)
+   * so that the flows with most of the dependencies are validated first.
    */
   public static void validateAll() {
     Iterator<FlowInstanceData> iterator = FlowRegistry.allFlowsIterator();

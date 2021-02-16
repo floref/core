@@ -28,6 +28,7 @@ import org.floref.core.dsl.flow.reversible.Reversible;
 
 /**
  * Otherwise entry point.
+ *
  * @author Cristian Donoiu
  */
 public class Otherwise<P, F> extends FlowInstructionImpl<F> implements
@@ -47,6 +48,6 @@ public class Otherwise<P, F> extends FlowInstructionImpl<F> implements
   }
 
   public P end() {
-    return (P)((When)parent).end(); // Delegate to .when.
+    return (P) ((When) parent).end(); // Delegate to .when.
   }
 }

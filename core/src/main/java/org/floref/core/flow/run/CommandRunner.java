@@ -33,7 +33,7 @@ public class CommandRunner {
 
   // For the moment one pool for all except
   public static ExecutorService executorService = new ThreadPoolExecutor(0,
-      FlowConfiguration.getIntConfig(commonThreadPoolMaxSize),60L, TimeUnit.SECONDS, new SynchronousQueue<Runnable>());
+      FlowConfiguration.getIntConfig(commonThreadPoolMaxSize), 60L, TimeUnit.SECONDS, new SynchronousQueue<Runnable>());
   public static ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(1);
 
   public static ExecutorService getExecutorService() {
@@ -43,6 +43,7 @@ public class CommandRunner {
   public static <T> Future<T> submit(Runnable runnable) {
     return (Future<T>) getExecutorService().submit(runnable);
   }
+
   public static <T> Future<T> submit(Callable callable) {
     return (Future<T>) getExecutorService().submit(callable);
   }

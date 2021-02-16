@@ -30,42 +30,42 @@ import static org.floref.core.dsl.command.FlowCommandBuilders.TO;
 public interface IFork<P> extends FlowInstruction {
 
   default P fork(ParamVoidConsumerVoidSupplier consumer) {
-    return (P)getFlowData().addChild(FORK, consumer);
+    return (P) getFlowData().addChild(FORK, consumer);
   }
 
   default <T> P fork(ParamSupplier<T> consumer) {
-    return (P)getFlowData().addChild(FORK, consumer);
+    return (P) getFlowData().addChild(FORK, consumer);
   }
 
   default <T> P fork(ParamConsumer<T> consumer) {
-    return (P)getFlowData().addChild(FORK, consumer);
+    return (P) getFlowData().addChild(FORK, consumer);
   }
 
   default <T, U> P fork(ParamBiConsumer<T, U> consumer) {
-    return (P)getFlowData().addChild(FORK, consumer);
+    return (P) getFlowData().addChild(FORK, consumer);
   }
 
   default <T, U, V> P fork(ParamTriConsumer<T, U, V> consumer) {
-    return (P)getFlowData().addChild(FORK, consumer);
+    return (P) getFlowData().addChild(FORK, consumer);
   }
 
   default <T, U, V, X> P fork(ParamTetraConsumer<T, U, V, X> consumer) {
-    return (P)getFlowData().addChild(FORK, consumer);
+    return (P) getFlowData().addChild(FORK, consumer);
   }
 
   default <T, U, V, X, Y> P fork(ParamPentaConsumer<T, U, V, X, Y> consumer) {
-    return (P)getFlowData().addChild(FORK, consumer);
+    return (P) getFlowData().addChild(FORK, consumer);
   }
 
   default <T, U, V, X, Y, Z> P fork(ParamHexaConsumer<T, U, V, X, Y, Z> consumer) {
-    return (P)getFlowData().addChild(FORK, consumer);
+    return (P) getFlowData().addChild(FORK, consumer);
   }
 
-  default <T, U, V, X, Y, Z, A> P fork(ParamHeptaConsumer<T, U, V, X, Y, Z, A> consumer){
-    return (P)getFlowData().addChild(FORK, consumer);
+  default <T, U, V, X, Y, Z, A> P fork(ParamHeptaConsumer<T, U, V, X, Y, Z, A> consumer) {
+    return (P) getFlowData().addChild(FORK, consumer);
   }
 
   default <T> P fork(LambdaMeta<T> lambdaMeta) {
-    return (P)getFlowData().addChild(TO, lambdaMeta);
+    return (P) getFlowData().addChild(TO, lambdaMeta);
   }
 }
